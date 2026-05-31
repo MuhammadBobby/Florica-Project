@@ -1,3 +1,8 @@
 <x-layouts.home title="Home">
-    <h1 class="text-red-500">Welcome to the Landing Page</h1>
+    {{-- =========== BERANDA ========== --}}
+    <x-landing.header />
+
+    {{-- =========== BEST PRODUCT ========== --}}
+    <x-landing.best-product :products="$bouquetProducts" />
+
 </x-layouts.home>

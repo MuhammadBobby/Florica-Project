@@ -11,11 +11,8 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         $categories = [
-            'Bouquet Bunga',
-            'Bouquet Snack',
-            'Bouquet Uang',
-            'Gift Box',
-            'Wisuda',
+            'Bouquet',
+            'Keychain'
         ];
 
         foreach ($categories as $category) {

@@ -13,11 +13,15 @@
 @source '../**/*.js';
 
 @theme {
+    /* Fonts */
     --font-sans:
         "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
         "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
         "Noto Color Emoji";
-
     --font-montserrat: "Montserrat", var(--font-sans);
     --font-poppins: "Poppins", var(--font-sans);
+
+    /* Colors */
+    --color-primary: #dd3d93;
+    --color-secondary: #f8c7df;
 }

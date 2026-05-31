@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
+
 // use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -9,6 +11,20 @@ class HomeController extends Controller
     //============ LANDING PAGE =============
     public function index()
     {
-        return view('landing.index');
+        // Get product category bouquet
+        $bouquetProducts = Product::query()
+            ->with([
+                'category',
+                'primaryImage',
+            ])
+            ->whereHas('category', function ($query) {
+                $query->where('slug', 'bouquet');
+            })
+            ->where('is_active', true)
+            ->take(3)
+            ->get();
+
+
+        return view('landing.index', compact('bouquetProducts'));
     }
 }
