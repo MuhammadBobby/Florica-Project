@@ -46,7 +46,7 @@
 @endphp
 
 
-<div class="w-full h-full max-w-1/2 flex flex-col justify-between">
+<div class="w-full h-full md:max-w-1/2 flex flex-col justify-between">
 
     {{-- ================== CONTACT US ================== --}}
     <div>
@@ -59,7 +59,7 @@
                         {!! $contact['icon'] !!}
                     </span>
 
-                    <span class="text-lg tracking-wide">{{ $contact['value'] }}</span>
+                    <span class="text-sm tracking-wide md:text-lg">{{ $contact['value'] }}</span>
                 </div>
             @endforeach
         </div>
@@ -77,7 +77,7 @@
                         {!! $follow['icon'] !!}
                     </span>
 
-                    <span class="text-lg tracking-wide">{{ $follow['value'] }}</span>
+                    <span class="text-sm tracking-wide md:text-lg">{{ $follow['value'] }}</span>
                 </div>
             @endforeach
         </div>

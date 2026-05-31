@@ -1,6 +1,6 @@
 @props(['product'])
 
-<div class="block w-1/3 max-w-sm border-2 border-default rounded-base shadow-xl">
+<div class="block w-full max-w-sm border-2 border-default rounded-base shadow-xl md:w-1/3">
     <div class="h-full flex flex-col justify-between pb-3">
         <div class="h-full">
             <a href="#">
