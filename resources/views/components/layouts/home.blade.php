@@ -14,9 +14,9 @@
 <body class="font-poppins">
     <x-front.navbar />
 
-    <section class="container pt-24 mx-auto">
+    <div class="container pt-24 mx-auto">
         {{ $slot }}
-    </section>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
 </body>

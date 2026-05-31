@@ -24,7 +24,20 @@ class HomeController extends Controller
             ->take(3)
             ->get();
 
+        // Get product category keychain
+        $keychainProducts = Product::query()
+            ->with([
+                'category',
+                'primaryImage',
+            ])
+            ->whereHas('category', function ($query) {
+                $query->where('slug', 'keychain');
+            })
+            ->where('is_active', true)
+            ->take(3)
+            ->get();
 
-        return view('landing.index', compact('bouquetProducts'));
+
+        return view('landing.index', compact('bouquetProducts', 'keychainProducts'));
     }
 }
