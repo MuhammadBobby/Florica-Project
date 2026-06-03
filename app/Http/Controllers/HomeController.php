@@ -40,4 +40,19 @@ class HomeController extends Controller
 
         return view('landing.index', compact('bouquetProducts', 'keychainProducts'));
     }
+
+    // =========== PRODUCTS PAGE =============
+    public function products()
+    {
+        $products = Product::query()
+            ->with([
+                'category',
+                'primaryImage',
+                'reviews',
+            ])
+            ->where('is_active', true)
+            ->paginate(12);
+
+        return view('landing.products', compact('products'));
+    }
 }
