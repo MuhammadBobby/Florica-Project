@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Route;
 // ============= MAIN ROUTES =============
 Route::get('/', [HomeController::class, 'index'])->name('landing');
 Route::get('/products', [HomeController::class, 'products'])->name('products');
+Route::get('/products/{slug}', [HomeController::class, 'productDetail'])->name('product.detail');
 
 // ============= AUTH ROUTES =============
 Route::get('/login', [AuthController::class, 'login'])->name('login');

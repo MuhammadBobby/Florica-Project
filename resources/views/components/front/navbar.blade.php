@@ -27,8 +27,8 @@
         <div class="flex justify-center items-center gap-2 md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
             <a href="{{ route('login') }}"
                 class="hidden text-primary font-bold tracking-wider shadow-xs leading-5 rounded-base text-sm px-3 py-2 focus:outline-none hover:text-pink-700 md:block cursor-pointer">Login</a>
-            <button type="button"
-                class="hidden text-white bg-primary hover:bg-pink-700 box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-3 py-2 focus:outline-none md:block cursor-pointer">Register</button>
+            <a href="{{ route('register') }}"
+                class="hidden text-white bg-primary hover:bg-pink-700 box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-3 py-2 focus:outline-none md:block cursor-pointer">Register</a>
             <button data-collapse-toggle="navbar-sticky" type="button"
                 class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-body rounded-base md:hidden hover:bg-neutral-secondary-soft hover:text-heading focus:outline-none focus:ring-2 focus:ring-neutral-tertiary"
                 aria-controls="navbar-sticky" aria-expanded="false">

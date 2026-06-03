@@ -55,4 +55,21 @@ class HomeController extends Controller
 
         return view('landing.products', compact('products'));
     }
+
+    // =========== PRODUCT DETAIL PAGE =============
+    public function productDetail($slug)
+    {
+        $product = Product::query()
+            ->with([
+                'category',
+                'primaryImage',
+                'images',
+                'reviews',
+            ])
+            ->where('slug', $slug)
+            ->where('is_active', true)
+            ->firstOrFail();
+
+        return view('landing.product-detail', compact('product'));
+    }
 }
