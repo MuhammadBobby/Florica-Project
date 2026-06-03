@@ -16,7 +16,7 @@
 
 <nav class="fixed w-full z-20 top-0 insert-s-0 border-b border-default backdrop-blur-xl">
     <div class="max-w-screen flex flex-wrap items-center justify-between mx-auto px-4 py-1">
-        <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
+        <a href="{{ route('landing') }}" class="flex items-center space-x-3 rtl:space-x-reverse">
             <img src="/assets/logo_florica.webp" class="w-12 h-auto" alt="{{ config('app.name') }} Logo">
             <h6 class="self-center text-xl text-primary font-semibold whitespace-nowrap">Florica <span
                     class="text-primary/70">Blooms</span>
@@ -25,8 +25,8 @@
 
         {{-- AUTH BUTTON --}}
         <div class="flex justify-center items-center gap-2 md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-            <button type="button"
-                class="hidden text-primary font-bold tracking-wider shadow-xs leading-5 rounded-base text-sm px-3 py-2 focus:outline-none hover:text-pink-700 md:block cursor-pointer">Login</button>
+            <a href="{{ route('login') }}"
+                class="hidden text-primary font-bold tracking-wider shadow-xs leading-5 rounded-base text-sm px-3 py-2 focus:outline-none hover:text-pink-700 md:block cursor-pointer">Login</a>
             <button type="button"
                 class="hidden text-white bg-primary hover:bg-pink-700 box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-3 py-2 focus:outline-none md:block cursor-pointer">Register</button>
             <button data-collapse-toggle="navbar-sticky" type="button"
@@ -66,6 +66,12 @@
                     </li>
                 @endforeach
 
+                <li class="md:hidden mt-5">
+                    <a href="#"
+                        class="block rounded-sm py-2 px-3 font-bold tracking-wide border border-primary text-primary hover:bg-primary hover:text-white">
+                        Login / Register
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
