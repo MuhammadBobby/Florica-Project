@@ -5,6 +5,11 @@
         <p class="text-center text-gray-600 mb-8">Discover our wide range of products that cater to your needs.</p>
     </header>
 
+
+    {{-- Filter Product --}}
+    <x-front.filter-product :categories="$categories" />
+
+
     <div class="grid grid-cols-1 gap-8 mt-8 sm:grid-cols-2 lg:grid-cols-3 ms-2 mx-10">
         @foreach ($products as $product)
             <x-front.card-product :product="$product" />
@@ -13,6 +18,6 @@
 
     {{-- Pagination --}}
     <div class="my-8">
-        {{ $products->links() }}
+        {{ $products->withQueryString()->links() }}
     </div>
 </x-layouts.home>

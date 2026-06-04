@@ -218,7 +218,8 @@
         </section>
 
 
-        <a href="{{ route('products') }}"
+        {{-- Kembali --}}
+        <a href="{{ back()->getTargetUrl() }}"
             class="fixed top-20 left-6 z-50
            flex items-center gap-2
            px-4 py-3

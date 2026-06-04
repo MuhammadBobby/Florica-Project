@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 
 // use Illuminate\Http\Request;
@@ -44,16 +45,41 @@ class HomeController extends Controller
     // =========== PRODUCTS PAGE =============
     public function products()
     {
-        $products = Product::query()
+        // ambil parameter filter dari query string
+        $categorySlug = request()->query('category');
+
+        $query = Product::query()
             ->with([
                 'category',
                 'primaryImage',
-                'reviews',
             ])
-            ->where('is_active', true)
-            ->paginate(12);
+            ->withAvg('reviews', 'rating')
+            ->withCount('reviews')
+            ->where('is_active', true);
 
-        return view('landing.products', compact('products'));
+        // Filter Category
+        if ($category = request('category')) {
+            $query->whereHas('category', function ($q) use ($category) {
+                $q->where('slug', $category);
+            });
+        }
+
+        // Search Product
+        if ($search = request('search')) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+
+        $products = $query
+            ->latest()
+            ->paginate(12)
+            ->withQueryString();
+
+        $categories = Category::all();
+
+        return view('landing.products', compact('products', 'categories'));
     }
 
     // =========== PRODUCT DETAIL PAGE =============
