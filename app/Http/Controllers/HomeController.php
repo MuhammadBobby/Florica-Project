@@ -70,6 +70,15 @@ class HomeController extends Controller
             ->where('is_active', true)
             ->firstOrFail();
 
-        return view('landing.product-detail', compact('product'));
+        $relatedProducts = Product::with([
+            'primaryImage'
+        ])
+            ->where('category_id', $product->category_id)
+            ->where('id', '!=', $product->id)
+            ->latest()
+            ->take(4)
+            ->get();
+
+        return view('landing.product-detail', compact('product', 'relatedProducts'));
     }
 }
