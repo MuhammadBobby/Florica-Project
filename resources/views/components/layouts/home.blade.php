@@ -14,7 +14,7 @@
 <body class="font-poppins">
     <x-front.navbar />
 
-    <div class="w-full container px-5 pt-24 mx-auto md:px-0">
+    <div class="container mx-auto px-4 md:px-6 lg:px-8 pt-24">
         {{ $slot }}
     </div>
 

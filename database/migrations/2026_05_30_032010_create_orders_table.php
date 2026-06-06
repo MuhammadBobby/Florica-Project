@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('recipient_name');
             $table->string('recipient_phone');
             $table->text('shipping_address');
+            $table->foreignId('user_address_id')->nullable()->constrained('user_addresses')->cascadeOnUpdate()->setNullOnDelete();
             $table->decimal('subtotal', 15, 2);
             $table->decimal('shipping_cost', 15, 2);
             $table->decimal('total_amount', 15, 2);

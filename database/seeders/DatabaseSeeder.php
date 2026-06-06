@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             ShippingRegionSeeder::class,
             ProductSeeder::class,
             ProductImageSeeder::class,
+            StoreProfileSeeder::class,
         ]);
     }
 }

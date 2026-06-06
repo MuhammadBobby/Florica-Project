@@ -62,6 +62,17 @@ class User extends Authenticatable
         return $this->hasMany(OrderStatusLog::class, 'admin_id');
     }
 
+    public function addresses()
+    {
+        return $this->hasMany(UserAddress::class);
+    }
+
+    public function defaultAddress()
+    {
+        return $this->hasOne(UserAddress::class)
+            ->where('is_default', true);
+    }
+
 
     // ============ HELPER ============
     public function isAdmin(): bool

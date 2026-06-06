@@ -17,6 +17,7 @@ class Order extends Model
         'recipient_name',
         'recipient_phone',
         'shipping_address',
+        'user_address_id',
         'subtotal',
         'shipping_cost',
         'total_amount',
@@ -59,5 +60,10 @@ class Order extends Model
     public function statusLogs()
     {
         return $this->hasMany(OrderStatusLog::class);
+    }
+
+    public function userAddress()
+    {
+        return $this->belongsTo(UserAddress::class);
     }
 }
