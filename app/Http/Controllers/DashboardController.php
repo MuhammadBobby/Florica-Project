@@ -7,7 +7,7 @@ use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
-use Illuminate\Http\Request;
+// use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
@@ -45,5 +45,11 @@ class DashboardController extends Controller
             'latestOrders' => $latestOrders,
             'lowStockProducts' => $lowStockProducts,
         ]);
+    }
+
+    // =========== STORE PROFILE PAGE =============
+    public function storeProfile()
+    {
+        return view('admin.store-profile');
     }
 }

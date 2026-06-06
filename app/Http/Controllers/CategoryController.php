@@ -31,15 +31,22 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        // Validate
+        $validated = $this->validateCategory($request);
+
+        // Balekkan session error kalo validasi gagal
+        if (!$validated) {
+            return back()->withErrors($validated)->withInput();
+        }
+
         Category::create([
-            'name' => $request->name,
+            ...$validated,
             'slug' => Str::slug($request->name),
-            'description' => $request->description,
         ]);
 
         return redirect()
-            ->route('admin.categories.index')
-            ->with('success', 'Kategori berhasil dibuat');
+            ->route('categories.index')
+            ->with('success', 'Kategori Baru Berhasil Ditambahkan!');
     }
 
     /**
@@ -55,7 +62,12 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return view('admin.categories.edit', compact('category'));
+        $categories = Category::query()
+            ->withCount('products')
+            ->latest()
+            ->paginate(10);
+
+        return view('admin.categories.index', compact('category', 'categories'));
     }
 
     /**
@@ -63,14 +75,17 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
+        // Validate
+        $validated = $this->validateCategory($request);
+
         $category->update([
-            'name' => $request->name,
+            ...$validated,
             'slug' => Str::slug($request->name),
-            'description' => $request->description,
         ]);
 
         return redirect()
-            ->route('admin.categories.index');
+            ->route('categories.index')
+            ->with('success', 'Kategori Berhasil Diperbarui!');
     }
 
     /**
@@ -80,6 +95,24 @@ class CategoryController extends Controller
     {
         $category->delete();
 
-        return back()->with('success', 'Kategori berhasil dihapus');
+        return back()->with('success', 'Kategori Berhasil Dihapus!');
+    }
+
+    // ========== VALIDATION RULES & MESSAGES =============
+    private function validateCategory(Request $request): array
+    {
+        return $request->validate(
+            [
+                'name' => 'required|string|max:255|min:3',
+                'description' => 'nullable|string|max:500',
+            ],
+            [
+                'name.required' => 'Nama kategori wajib diisi.',
+                'name.min' => 'Nama kategori minimal 3 karakter.',
+                'name.max' => 'Nama kategori maksimal 255 karakter.',
+
+                'description.max' => 'Deskripsi maksimal 500 karakter.',
+            ]
+        );
     }
 }

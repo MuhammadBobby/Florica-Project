@@ -21,7 +21,9 @@
             <x-forms.label-input for="avatar" label="Avatar" type="file" placeholder="Pilih file gambar" />
         </div>
 
-        <x-forms.button type="submit" buttonLabel="Register" />
+        <x-forms.button type="submit">
+            Register
+        </x-forms.button>
     </form>
 
 </x-layouts.auth>

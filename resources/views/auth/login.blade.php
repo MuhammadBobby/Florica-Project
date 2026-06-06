@@ -6,6 +6,8 @@
         {{-- Password --}}
         <x-forms.label-input for="password" label="Password" type="password" placeholder="••••••••" isRequired />
 
-        <x-forms.button type="submit" buttonLabel="Login" />
+        <x-forms.button type="submit">
+            Login
+        </x-forms.button>
     </form>
 </x-layouts.auth>

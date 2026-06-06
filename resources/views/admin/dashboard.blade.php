@@ -1,14 +1,6 @@
 <x-layouts.dashboard title="Dashboard Admin">
 
-    <div class="mb-8">
-        <h1 class="text-3xl font-bold text-heading">
-            Dashboard
-        </h1>
-
-        <p class="mt-2 text-body">
-            Selamat datang di dashboard admin Florica.
-        </p>
-    </div>
+    <x-dashboard.header title="Dashboard" subTitle="Selamat datang di Dashboard Admin Florica Blooms." />
 
     {{-- Statistik --}}
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
