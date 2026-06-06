@@ -20,12 +20,6 @@ class CategoryController extends Controller
     }
 
 
-    // =========== CATEGORY CREATE =============
-    public function create()
-    {
-        return view('admin.categories.create');
-    }
-
     /**
      * Store a newly created resource in storage.
      */
@@ -49,13 +43,6 @@ class CategoryController extends Controller
             ->with('success', 'Kategori Baru Berhasil Ditambahkan!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Category $category)
-    {
-        return view('admin.categories.show', compact('category'));
-    }
 
     /**
      * Show the form for editing the specified resource.

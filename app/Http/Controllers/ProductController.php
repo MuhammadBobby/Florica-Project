@@ -17,6 +17,7 @@ class ProductController extends Controller
             ->with([
                 'category',
                 'primaryImage',
+                'images',
             ])
             ->latest()
             ->paginate(10);
