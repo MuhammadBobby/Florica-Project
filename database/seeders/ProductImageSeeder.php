@@ -14,7 +14,7 @@ class ProductImageSeeder extends Seeder
 
             ProductImage::create([
                 'product_id' => $product->id,
-                'image_url' => 'default_image.webp',
+                'image_url' => 'products/default_image.webp',
                 'is_primary' => true,
             ]);
         });

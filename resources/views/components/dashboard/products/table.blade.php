@@ -30,8 +30,8 @@
                     <th scope="row" class="w-fit px-2 py-4 font-medium text-heading">
                         {{ $index + 1 + ($products->currentPage() - 1) * $products->perPage() }}.
                     </th>
-                    <td class="px-6 py-4 font-semibold flex justify-center items-center gap-3">
-                        <img src="/assets/products/{{ $product->primaryImage?->image_url ?? 'default_image.webp' }}"
+                    <td class="px-6 py-4 font-semibold flex justify-start items-center gap-3">
+                        <img src="{{ asset('storage/' . $product->primaryImage?->image_url) ?? '/assets/products/default_image.webp' }}"
                             alt="Image {{ $product->name }}" class="w-20 shadow-xs rounded-base">
                         <p>
                             {{ $product->name }}

@@ -17,6 +17,7 @@ class StoreProfile extends Model
         'district',
         'city',
         'province',
+        'priceKm',
         'description',
     ];
 }

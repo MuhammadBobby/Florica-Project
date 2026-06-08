@@ -29,7 +29,7 @@ return new class extends Migration
             $table->string('district')->nullable();
             $table->string('city')->nullable();
             $table->string('province')->nullable();
-
+            $table->decimal('priceKm', 10, 2)->nullable();
             $table->text('description')->nullable();
             $table->timestamps();
         });
