@@ -16,8 +16,9 @@ Route::get('/products/{slug}', [HomeController::class, 'productDetail'])->name('
 
 // ============= AUTH ROUTES =============
 Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/login', [AuthController::class, 'store'])->name('login.store');
 Route::get('/register', [AuthController::class, 'register'])->name('register');
-Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // ============== DASHBOARD ROUTES =============
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

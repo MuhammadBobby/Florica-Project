@@ -134,6 +134,23 @@
                 </li>
             @endforeach
 
+            {{-- Logout --}}
+            <li class="mt-5">
+                <form id="logout-form" method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit"
+                        class="w-full flex items-center justify-center gap-4 text-primary bg-neutral-primary border border-primary hover:bg-primary hover:text-white focus:ring-4 focus:ring-neutral-tertiary font-medium leading-5 rounded-base text-sm px-4 py-2 focus:outline-none">
+                        <svg class="rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                            height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M20 12H8m12 0-4 4m4-4-4-4M9 4H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h2" />
+                        </svg>
+
+                        <span class="me-8">Logout</span>
+                    </button>
+                </form>
+            </li>
+
         </ul>
     </div>
 </aside>
