@@ -10,7 +10,13 @@
     </div>
 
     {{-- Table --}}
-    <x-dashboard.products.table :products="$products" />
+    @if ($products->isEmpty())
+        <x-dashboard.table-empty title="Belum Ada Produk">
+            Saat ini belum ada produk yang anda tambahkan.
+        </x-dashboard.table-empty>
+    @else
+        <x-dashboard.products.table :products="$products" />
+    @endif
 
     {{-- Pagination --}}
     <x-dashboard.pagination :paginator="$products" />
@@ -37,11 +43,11 @@
             </script>
         @endif
 
-        @if ($errors->any() && old('form_type') === 'create-category')
+        @if ($errors->any() && old('form_type') === 'create-product')
             <script>
                 document.addEventListener('DOMContentLoaded', () => {
 
-                    const modalElement = document.getElementById('create-category-modal');
+                    const modalElement = document.getElementById('create-product-modal');
 
                     modalElement.classList.add('bg-black/50');
 

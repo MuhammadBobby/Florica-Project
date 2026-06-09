@@ -46,40 +46,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'category_id' => ['required', 'exists:categories,id'],
-            'name' => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string'],
-
-            'price' => ['required', 'numeric', 'min:0'],
-            'stock' => ['required', 'integer', 'min:0'],
-            'weight' => ['nullable', 'integer', 'min:0'],
-
-            'is_active' => ['required', 'boolean'],
-
-            'primary_image' => [
-                'required',
-                'image',
-                'mimes:jpeg,png,jpg,webp',
-                'max:2048'
-            ],
-
-            'gallery_images' => ['nullable', 'array'],
-
-            'gallery_images.*' => [
-                'image',
-                'mimes:jpeg,png,jpg,webp',
-                'max:2048'
-            ],
-            [
-                'primary_image.required' => 'Gambar utama produk wajib diisi.',
-                'gallery_images.*.required' => 'Gambar galeri produk wajib diisi.',
-                'gallery_images.*.image' => 'File harus berupa gambar.',
-                'gallery_images.*.mimes' => 'Format file harus jpeg, jpg, png, webp.',
-                'gallery_images.*.max' => 'Ukuran file maksimal 2 MB.',
-                'primary_image.max' => 'Ukuran file maksimal 2 MB.',
-            ]
-        ]);
+        $validated = $this->validateProduct($request);
 
         DB::transaction(function () use ($request, $validated) {
 
@@ -167,37 +134,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        $validated = $request->validate([
-            'category_id' => ['required', 'exists:categories,id'],
-            'name' => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string'],
-            'price' => ['required', 'numeric', 'min:0'],
-            'stock' => ['required', 'integer', 'min:0'],
-            'weight' => ['nullable', 'integer', 'min:0'],
-            'is_active' => ['required', 'boolean'],
-
-            'primary_image' => [
-                'nullable',
-                'image',
-                'mimes:jpeg,jpg,png,webp',
-                'max:2048',
-            ],
-
-            'gallery_images' => ['nullable', 'array'],
-            'gallery_images.*' => [
-                'image',
-                'mimes:jpeg,jpg,png,webp',
-                'max:2048',
-            ],
-            [
-                'primary_image.required' => 'Gambar utama produk wajib diisi.',
-                'gallery_images.*.required' => 'Gambar galeri produk wajib diisi.',
-                'gallery_images.*.image' => 'File harus berupa gambar.',
-                'gallery_images.*.mimes' => 'Format file harus jpeg, jpg, png, webp.',
-                'gallery_images.*.max' => 'Ukuran file maksimal 2 MB.',
-                'primary_image.max' => 'Ukuran file maksimal 2 MB.',
-            ]
-        ]);
+        $validated = $this->validateProduct($request);
 
         DB::transaction(function () use ($request, $product, $validated) {
             // Update Product
@@ -280,6 +217,81 @@ class ProductController extends Controller
         return back()->with(
             'success',
             'Produk berhasil dihapus'
+        );
+    }
+
+
+    // ========== VALIDATION RULES & MESSAGES =============
+    private function validateProduct(Request $request): array
+    {
+        return $request->validate(
+            [
+                'category_id' => ['required', 'exists:categories,id'],
+                'name' => ['required', 'string', 'max:255'],
+                'description' => ['required', 'string'],
+                'price' => ['required', 'numeric', 'min:0'],
+                'stock' => ['required', 'integer', 'min:0'],
+                'weight' => ['nullable', 'integer', 'min:0'],
+                'is_active' => ['required', 'boolean'],
+
+                'primary_image' => [
+                    'nullable',
+                    'image',
+                    'mimes:jpeg,jpg,png,webp',
+                    'max:2048',
+                ],
+
+                'gallery_images' => ['nullable', 'array'],
+
+                'gallery_images.*' => [
+                    'image',
+                    'mimes:jpeg,jpg,png,webp',
+                    'max:2048',
+                ],
+            ],
+            [
+                // Category
+                'category_id.required' => 'Kategori produk wajib dipilih.',
+                'category_id.exists' => 'Kategori yang dipilih tidak valid.',
+
+                // Name
+                'name.required' => 'Nama produk wajib diisi.',
+                'name.max' => 'Nama produk maksimal 255 karakter.',
+
+                // Description
+                'description.required' => 'Deskripsi produk wajib diisi.',
+
+                // Price
+                'price.required' => 'Harga produk wajib diisi.',
+                'price.numeric' => 'Harga produk harus berupa angka.',
+                'price.min' => 'Harga produk tidak boleh kurang dari 0.',
+
+                // Stock
+                'stock.required' => 'Stok produk wajib diisi.',
+                'stock.integer' => 'Stok produk harus berupa angka bulat.',
+                'stock.min' => 'Stok produk tidak boleh kurang dari 0.',
+
+                // Weight
+                'weight.integer' => 'Berat produk harus berupa angka bulat.',
+                'weight.min' => 'Berat produk tidak boleh kurang dari 0.',
+
+                // Status
+                'is_active.required' => 'Status produk wajib dipilih.',
+                'is_active.boolean' => 'Status produk tidak valid.',
+
+                // Primary Image
+                'primary_image.required' => 'Gambar utama wajib diupload.',
+                'primary_image.image' => 'File gambar utama harus berupa gambar.',
+                'primary_image.mimes' => 'Gambar utama harus berformat JPG, JPEG, PNG, atau WEBP.',
+                'primary_image.max' => 'Ukuran gambar utama maksimal 2 MB.',
+
+                // Gallery Images
+                'gallery_images.array' => 'Galeri gambar tidak valid.',
+
+                'gallery_images.*.image' => 'Semua file galeri harus berupa gambar.',
+                'gallery_images.*.mimes' => 'Format gambar galeri harus JPG, JPEG, PNG, atau WEBP.',
+                'gallery_images.*.max' => 'Ukuran setiap gambar galeri maksimal 2 MB.',
+            ]
         );
     }
 }

@@ -20,7 +20,8 @@ Route::get('/register', [AuthController::class, 'register'])->name('register');
 
 // ============== DASHBOARD ROUTES =============
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-Route::get('/dashboard/store-profile', [DashboardController::class, 'storeProfile'])->name('store.profile');
+Route::get('/dashboard/store-profile', [DashboardController::class, 'storeProfile'])->name('store-profile.index');
+Route::put('/store-profile', [DashboardController::class, 'updateStoreProfile'])->name('store-profile.update');
 Route::resource('dashboard/categories', CategoryController::class);
 Route::resource('dashboard/products', ProductController::class);
 Route::resource('dashboard/orders', OrderController::class);

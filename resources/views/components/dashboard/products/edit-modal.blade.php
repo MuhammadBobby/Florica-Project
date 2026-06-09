@@ -134,6 +134,12 @@
                                 <small class="text-body">
                                     Gambar lama tidak akan terhapus.
                                 </small>
+
+                                @error('gallery_images.*')
+                                    <p class="mt-1 text-sm text-red-500">
+                                        {{ $message }}
+                                    </p>
+                                @enderror
                             </div>
 
                             <x-forms.button type="submit">

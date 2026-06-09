@@ -26,6 +26,8 @@
 
                 @csrf
 
+                <input type="hidden" name="form_type" value="create-product">
+
                 {{-- Kategori --}}
                 <x-forms.select label="Kategori" for="category_id" :options="$categories->pluck('name', 'id')->toArray()" required />
 

@@ -1,24 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Florica Blooms - {{ $title }}</title>
-
-    <!-- Styles / Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-
-<body class="font-poppins">
+<x-layouts.layout title="{{ $title }}">
     <div class="flex justify-end items-center pe-30 bg-secondary w-full h-full min-w-screen min-h-screen bg-center bg-no-repeat bg-[url('/assets/elements/bg-auth.webp')] bg-blend-multiply bg-cover"
         loading="eager" style="background-image:url('/assets/elements/bg-auth.webp')">
         <div class="bg-white/80 border border-slate-400 p-10 rounded-lg shadow-lg w-full max-w-xl">
             <div class="text-center">
                 <a href="{{ route('landing') }}">
-                    <img src="/assets/logo_florica.webp" class="w-1/4 h-auto mx-auto"
-                        alt="{{ config('app.name') }} Logo">
+                    <img src="/assets/logo_florica.webp" class="w-1/4 h-auto mx-auto" alt="{{ config('app.name') }} Logo">
                 </a>
 
                 <hr class="my-3 border-gray-300" />
@@ -45,7 +31,4 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
-</body>
-
-</html>
+</x-layouts.layout>
