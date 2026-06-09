@@ -45,9 +45,6 @@ class HomeController extends Controller
     // =========== PRODUCTS PAGE =============
     public function products()
     {
-        // ambil parameter filter dari query string
-        $categorySlug = request()->query('category');
-
         $query = Product::query()
             ->with([
                 'category',

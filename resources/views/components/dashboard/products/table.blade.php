@@ -1,4 +1,13 @@
 @props(['products'])
+@php
+    $categoryColors = [
+        'bouquet' => 'text-primary',
+        'flower box' => 'text-purple-600',
+        'standing flower' => 'text-amber-600',
+    ];
+
+    $color = $categoryColors[strtolower($product->category->name ?? '')] ?? 'text-emerald-700';
+@endphp
 
 <div class="relative overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base border border-default">
     <table class="w-full text-sm text-left rtl:text-right text-body">
@@ -18,6 +27,12 @@
                 </th>
                 <th scope="col" class="px-6 py-3 font-medium">
                     Stok
+                </th>
+                <th scope="col" class="px-6 py-3 font-medium">
+                    Kategori
+                </th>
+                <th scope="col" class="px-6 py-3 font-medium">
+                    Status
                 </th>
                 <th scope="col" class="px-6 py-3 font-medium text-center">
                     Action
@@ -50,6 +65,27 @@
                     <td class="px-6 py-4">
                         {{ $product->stock }}
                     </td>
+                    <td class="px-6 py-4 font-bold {{ $color }}">
+                        {{ $product->category->name ?? '-' }}
+                    </td>
+
+                    <td class="px-3 py-4">
+                        @if ($product->is_active)
+                            <span
+                                class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-100 text-emerald-700 border border-emerald-200">
+                                <span class="w-2 h-2 mr-1.5 bg-emerald-500 rounded-full whitespace-nowrap"></span>
+                                Aktif
+                            </span>
+                        @else
+                            <span
+                                class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700 border border-red-200">
+                                <span
+                                    class="w-2 h-2 mr-1.5 bg-red-500 rounded-full whitespace-nowrap line-clamp-1"></span>
+                                Tidak Aktif
+                            </span>
+                        @endif
+                    </td>
+
                     <td class="px-6 py-4">
                         <div class="flex items-center justify-center gap-4">
 
@@ -77,7 +113,8 @@
                             </a>
 
                             {{-- Delete --}}
-                            <form action="{{ route('products.destroy', $product) }}" method="POST" class="delete-form">
+                            <form action="{{ route('products.destroy', $product) }}" method="POST"
+                                class="delete-form">
 
                                 @csrf
                                 @method('DELETE')

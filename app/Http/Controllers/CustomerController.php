@@ -16,14 +16,42 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = User::query()
-            ->with('addresses')
-            ->where('role', RoleUser::Customer)
-            ->latest()
-            ->paginate(10);
+        $queryCust = User::query()
+            ->with('addresses');
+
+        // Filter role
+        if ($role = request('role')) {
+            $queryCust->where('role', $role);
+        }
+
+        // Filter search
+        if ($search = request('search')) {
+            $customers = $queryCust
+                ->where('full_name', 'like', '%' . $search . '%')
+                ->orWhere('email', 'like', '%' . $search . '%')
+                ->orWhere('phone', 'like', '%' . $search . '%')
+                ->latest()
+                ->paginate(10);
+        }
+
+        $customers = $queryCust->latest()->paginate(10);
+
+        // Role options
+        $rolesOptions = [
+            [
+                'label' => 'Pelanggan',
+                'value' => RoleUser::Customer->value
+            ],
+            [
+                'label' => 'Admin',
+                'value' => RoleUser::Admin->value
+            ]
+        ];
+
 
         return view('admin.customers.index', [
-            'customers' => $customers
+            'customers' => $customers,
+            'rolesOptions' => $rolesOptions
         ]);
     }
 

@@ -1,3 +1,6 @@
+@php
+    use App\Enums\RoleUser;
+@endphp
 @props(['customers'])
 
 <div class="relative overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base border border-default">
@@ -15,6 +18,9 @@
                 </th>
                 <th scope="col" class="px-6 py-3 font-medium">
                     No. Telepon
+                </th>
+                <th scope="col" class="px-6 py-3 font-medium">
+                    Role
                 </th>
                 <th scope="col" class="px-6 py-3 font-medium text-center">
                     Action
@@ -38,19 +44,25 @@
                     <td class="px-6 py-4">
                         {{ $cust->phone }}
                     </td>
+                    <td class="px-6 py-4 uppercase font-semibold">
+                        {{ $cust->role }}
+                    </td>
+
                     <td class="px-6 py-4">
                         <div class="flex items-center justify-center gap-4">
 
                             {{-- Detail --}}
-                            <a href="{{ route('customers.show', $cust) }}" class="text-yellow-500 hover:text-yellow-600"
-                                title="Detail">
-                                <svg class="w-6 h-6 aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                                    height="24" fill="none" viewBox="0 0 24 24">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                </svg>
-                            </a>
+                            @if ($cust->role === RoleUser::Customer)
+                                <a href="{{ route('customers.show', $cust) }}"
+                                    class="text-yellow-500 hover:text-yellow-600" title="Detail">
+                                    <svg class="w-6 h-6 aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                        width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                    </svg>
+                                </a>
+                            @endif
 
                             {{-- Delete --}}
                             <form action="{{ route('customers.destroy', $cust) }}" method="POST" class="delete-form">

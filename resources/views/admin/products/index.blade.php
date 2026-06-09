@@ -1,10 +1,26 @@
+@php
+    $statusProductOptions = [
+        [
+            'label' => 'Aktif',
+            'value' => 'active',
+        ],
+        [
+            'label' => 'Tidak Aktif',
+            'value' => 'inactive',
+        ],
+    ];
+@endphp
+
 <x-layouts.dashboard title="Products">
     <x-dashboard.header title="Produk" subTitle="Kelola Produk Florica Blooms." />
 
     {{-- Create Button --}}
-    <div class="flex items-center justify-end">
+    <div class="flex items-center justify-between mb-8 mt-12">
+        {{-- Filter --}}
+        <x-dashboard.products.filter :categories="$categories" :statusProductOptions="$statusProductOptions" />
+
         <button type="button" data-modal-target="create-product-modal" data-modal-toggle="create-product-modal"
-            class="mb-4 px-4 py-2.5 text-sm font-medium text-white bg-primary rounded-base hover:bg-pink-700 focus:ring-4 focus:ring-secondary">
+            class="px-4 py-2.5 text-sm font-medium text-white bg-primary rounded-base hover:bg-pink-700 focus:ring-4 focus:ring-secondary">
             Tambah Produk
         </button>
     </div>

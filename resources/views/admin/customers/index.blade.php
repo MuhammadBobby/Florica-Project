@@ -1,6 +1,8 @@
 <x-layouts.dashboard title="Customers">
     <x-dashboard.header title="Data Pelanggan" subTitle="Lihat semua data pelanggan Florica Blooms." />
 
+    {{-- Filter --}}
+    <x-dashboard.customers.filter :rolesOptions="$rolesOptions" />
 
     {{-- Table --}}
     @if ($customers->isEmpty())

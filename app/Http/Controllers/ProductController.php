@@ -17,14 +17,38 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::query()
+        // Query Product
+        $query = Product::query()
             ->with([
                 'category',
                 'primaryImage',
                 'images',
-            ])
+            ]);
+
+        // Search
+        if ($search = request('search')) {
+            $query->where('name', 'like', "%{$search}%");
+        }
+
+        // category filter
+        if ($category = request('category')) {
+            $query->whereHas(
+                'category',
+                fn($q) =>
+                $q->where('slug', $category)
+            );
+        }
+
+        // Status
+        if ($status = request('status')) {
+            $query->where('is_active', $status === 'active');
+        }
+
+
+        $products = $query
             ->latest()
-            ->paginate(10);
+            ->paginate(10)
+            ->withQueryString();
 
         $categories = Category::all();
 
