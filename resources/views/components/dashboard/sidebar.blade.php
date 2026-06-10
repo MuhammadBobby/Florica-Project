@@ -58,7 +58,7 @@
         </div>
 
         {{-- LOGO --}}
-        <a href="{{ route('dashboard') }}" class="flex flex-col items-center mb-6">
+        <a href="{{ route('landing') }}" class="flex flex-col items-center mb-6">
             <img src="{{ asset('/assets/logo_florica.webp') }}" class="h-12 me-3" alt="Florica Blooms Logo">
             <span class="self-center text-2xl font-semibold whitespace-nowrap text-primary">Florica Blooms</span>
         </a>
