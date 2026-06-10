@@ -4,7 +4,8 @@
 
     {{-- Main Image --}}
     <div class="overflow-hidden rounded-xl border border-gray-100">
-        <img class="w-full h-112.5 object-cover" src="/assets/products/{{ $primaryImage->image_url }}"
+        <img class="w-full h-112.5 object-cover"
+            src="{{ asset('storage/' . $primaryImage?->image_url) ?? '/assets/products/default_image.webp' }}"
             alt="{{ $primaryImage->image_url }}">
     </div>
 
@@ -13,7 +14,7 @@
         @foreach ($images as $image)
             <div class="shrink-0">
                 <img class="w-24 h-24 object-cover rounded-lg border border-gray-200 hover:border-primary cursor-pointer transition"
-                    src="/assets/products/{{ $image->image_url }}" alt="{{ $image->image_url }}">
+                    src="{{ asset('storage/' . $primaryImage?->image_url) ?? '/assets/products/default_image.webp' }}">
             </div>
         @endforeach
     </div>

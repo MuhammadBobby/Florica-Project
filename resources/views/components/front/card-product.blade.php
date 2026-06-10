@@ -6,7 +6,7 @@
 <div class="w-full max-w-sm bg-neutral-primary-soft p-6 border border-default rounded-base shadow-xs">
     <a href="{{ route('product.detail', $product->slug) }}">
         <img class="rounded-base mb-6 max-h-64 w-full object-cover"
-            src="/assets/products/{{ $product->primaryImage?->image_url ?? 'default_image.webp' }}"
+            src="{{ asset('storage/' . $product->primaryImage?->image_url) ?? '/assets/products/default_image.webp' }}"
             alt={{ $product->name }} />
     </a>
     <div>

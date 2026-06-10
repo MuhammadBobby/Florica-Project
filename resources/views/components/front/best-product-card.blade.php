@@ -5,7 +5,7 @@
         <div class="h-full">
             <a href="#">
                 <img class="rounded-t-base h-72 w-full object-cover"
-                    src="/assets/products/{{ $product->primaryImage?->image_url ?? 'default_image.webp' }}"
+                    src="{{ asset('storage/' . $product->primaryImage?->image_url) ?? '/assets/products/default_image.webp' }}"
                     alt="Image {{ $product->name }}" />
             </a>
             <div class="p-6 text-center">
