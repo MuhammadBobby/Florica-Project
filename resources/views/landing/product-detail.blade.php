@@ -72,29 +72,33 @@
                 </div>
 
                 {{-- Quantity --}}
-                <div class="mt-6">
-                    <label class="block text-sm font-medium mb-2">
-                        Jumlah
-                    </label>
+                <form action="{{ route('cart.store') }}" method="POST">
+                    @csrf
 
-                    <input type="number" min="1" value="1"
-                        class="w-24 border border-gray-300 rounded-lg px-3 py-2 focus:ring-primary focus:border-primary">
-                </div>
+                    <input type="hidden" name="product_id" value="{{ $product->id }}">
 
-                {{-- Action Button --}}
-                <div class="flex flex-col sm:flex-row gap-3 mt-8">
+                    <div class="mt-6">
+                        <label class="block text-sm font-medium mb-2">
+                            Jumlah
+                        </label>
 
-                    <button
-                        class="flex-1 bg-secondary hover:bg-pink-300 text-primary font-semibold py-3 rounded-full transition">
-                        Tambah ke Keranjang
-                    </button>
+                        <input type="number" min="1" value="1" name="quantity"
+                            class="w-24 border border-gray-300 rounded-lg px-3 py-2 focus:ring-primary focus:border-primary">
+                    </div>
 
-                    <button
-                        class="flex-1 bg-primary hover:bg-pink-700 text-white font-semibold py-3 rounded-full transition">
-                        Beli Sekarang
-                    </button>
+                    {{-- Action Button --}}
+                    <div class="flex flex-col sm:flex-row gap-3 mt-8">
+                        <button type="submit"
+                            class="flex-1 bg-secondary hover:bg-pink-300 text-primary font-semibold py-3 rounded-full transition">
+                            Tambah ke Keranjang
+                        </button>
 
-                </div>
+                        <button
+                            class="flex-1 bg-primary hover:bg-pink-700 text-white font-semibold py-3 rounded-full transition">
+                            Beli Sekarang
+                        </button>
+                    </div>
+                </form>
 
                 {{-- Additional Info --}}
                 <div class="mt-8 border-t pt-6">

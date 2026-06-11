@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OrderController;
@@ -38,3 +40,16 @@ Route::middleware(['auth', 'role:admin'])
         Route::resource('orders', OrderController::class);
         Route::resource('customers', CustomerController::class);
     });
+
+
+// ============ CUSTOMER ROUTES =============
+Route::middleware(['auth'])->group(function () {
+    // Cart
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
+    Route::put('/cart/{cartItem}', [CartController::class, 'update'])->name('cart.update');
+    Route::delete('/cart/{cartItem}', [CartController::class, 'destroy'])->name('cart.destroy');
+
+    // Checkout
+    Route::post('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+});

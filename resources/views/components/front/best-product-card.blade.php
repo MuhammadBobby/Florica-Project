@@ -3,7 +3,7 @@
 <div class="block w-full max-w-sm border-2 border-default rounded-base shadow-xl md:w-1/3">
     <div class="h-full flex flex-col justify-between pb-3">
         <div class="h-full">
-            <a href="#">
+            <a href="{{ route('product.detail', $product->slug) }}">
                 <img class="rounded-t-base h-72 w-full object-cover"
                     src="{{ asset('storage/' . $product->primaryImage?->image_url) ?? '/assets/products/default_image.webp' }}"
                     alt="Image {{ $product->name }}" />
@@ -36,10 +36,18 @@
                 Rp {{ number_format($product->price, 0, ',', '.') }}
             </p>
 
-            <a href="#"
-                class="block text-sm text-primary tracking-widest bg-secondary box-border border border-transparent hover:bg-pink-300 focus:ring-4 focus:ring-pink-200 shadow-xs leading-5 rounded-full px-4 py-2.5 mt-5 focus:outline-none">
-                + Tambah Keranjang
-            </a>
+            <form action="{{ route('cart.store') }}" method="POST">
+                @csrf
+
+                <input type="hidden" name="product_id" value="{{ $product->id }}">
+
+                <input type="hidden" name="quantity" value="1">
+
+                <button type="submit"
+                    class="block text-sm text-primary tracking-widest bg-secondary box-border border border-transparent hover:bg-pink-300 focus:ring-4 focus:ring-pink-200 shadow-xs leading-5 rounded-full px-4 py-2.5 mt-5 focus:outline-none">
+                    + Tambah Keranjang
+                </button>
+            </form>
         </div>
     </div>
 </div>

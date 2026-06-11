@@ -45,14 +45,22 @@
 
         <div class="flex flex-col gap-4 mt-6 sm:flex-row sm:items-center sm:justify-between">
 
-            <span class="text-xl font-bold text-primary">
+            <span class="text-lg font-bold text-primary">
                 Rp {{ number_format($product->price, 0, ',', '.') }}
             </span>
 
-            <button type="button"
-                class="flex items-center justify-center px-3 py-1.5 text-sm tracking-widest rounded-full border border-transparent shadow-xs bg-secondary text-primary hover:bg-pink-300 focus:outline-none focus:ring-4 focus:ring-pink-200">
-                + Tambah Keranjang
-            </button>
+            <form action="{{ route('cart.store') }}" method="POST">
+                @csrf
+
+                <input type="hidden" name="product_id" value="{{ $product->id }}">
+
+                <input type="hidden" name="quantity" value="1">
+
+                <button type="submit"
+                    class="flex items-center justify-center px-3 py-1.5 text-sm tracking-widest rounded-full border border-transparent shadow-xs bg-secondary text-primary hover:bg-pink-300 focus:outline-none focus:ring-4 focus:ring-pink-200">
+                    + Tambah Keranjang
+                </button>
+            </form>
 
         </div>
     </div>

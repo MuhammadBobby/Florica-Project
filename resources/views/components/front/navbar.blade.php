@@ -27,7 +27,7 @@
         <div class="flex justify-center items-center gap-2 md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
             @auth
                 <div class="flex items-center justify-end gap-3">
-                    <button type="button"
+                    <a href="{{ route('cart.index') }}"
                         class="relative text-white bg-primary box-border border border-transparent hover:bg-pink-700 focus:ring-4 focus:ring-secondary shadow-xs font-medium leading-5 rounded-full text-sm p-2 focus:outline-none">
                         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
@@ -37,10 +37,13 @@
                         </svg>
 
                         <span class="sr-only">Notifications Cart</span>
-                        <div
-                            class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-danger border-2 border-buffer rounded-full -top-2 -inset-e-2">
-                            20</div>
-                    </button>
+                        @if ($cartCount >= 0)
+                            <div
+                                class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-danger border-2 border-buffer rounded-full -top-2 -inset-e-2">
+                                {{ $cartCount }}
+                            </div>
+                        @endif
+                    </a>
 
 
                     <x-front.profile-navbar />

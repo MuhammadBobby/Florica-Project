@@ -38,6 +38,8 @@ class HomeController extends Controller
             ->take(3)
             ->get();
 
+        $cartCount = 0;
+
 
         return view('landing.index', compact('bouquetProducts', 'keychainProducts'));
     }
