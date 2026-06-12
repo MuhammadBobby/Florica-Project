@@ -9,6 +9,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserAddressController;
 use Illuminate\Support\Facades\Route;
 
 // ============= MAIN ROUTES =============
@@ -52,4 +53,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Checkout
     Route::post('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+
+    // Adress
+    Route::resource('my-addresses', UserAddressController::class);
 });

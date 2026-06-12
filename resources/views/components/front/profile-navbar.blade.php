@@ -56,7 +56,8 @@
 
             </a>
 
-            <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-neutral-secondary-medium">
+            <a href="{{ route('my-addresses.index') }}"
+                class="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-neutral-secondary-medium">
 
                 <span>📍</span>
                 <span>Alamat Saya</span>
