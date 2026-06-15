@@ -18,6 +18,8 @@ class UserAddress extends Model
         'city',
         'province',
         'is_default',
+        'postal_code',
+        'distanceKm',
     ];
 
     protected $casts = [

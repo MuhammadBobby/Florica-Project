@@ -1,122 +1,90 @@
 <x-layouts.home title="My Addresses">
     <div>
-        <div class="ms-5 -mb-3">
+        <div class="ms-5 -mb-8">
             <x-dashboard.header title="Alamat Saya" subTitle="Kelola alamat anda untuk pengiriman produk." />
         </div>
 
-        <div class="grid md:grid-cols-2 gap-4 p-6">
-            @forelse($addresses as $address)
-                <div class="border rounded-base p-4">
-                    <div class="flex justify-between">
-                        <div>
-                            <h4 class="font-bold">
-                                {{ $address->label }}
-                            </h4>
+        {{-- Addresses --}}
+        <x-front.user-addresses.adress :addresses="$addresses" />
 
-                            @if ($address->is_default)
-                                <span class="text-xs bg-primary text-white px-2 py-1 rounded-full">
-                                    Utama
-                                </span>
-                            @endif
-                        </div>
-                    </div>
-
-                    <p class="mt-3">
-                        {{ $address->recipient_name }}
-                    </p>
-
-                    <p>
-                        {{ $address->phone }}
-                    </p>
-
-                    <p class="text-body mt-2">
-                        {{ $address->address }}
-                    </p>
-
-                    @if ($address->distance_km)
-                        <p class="mt-3 text-primary font-semibold">
-                            {{ $address->distance_km }} KM
-                        </p>
-                    @endif
-                </div>
-
-            @empty
-                <div class="col-span-full border-2 border-dashed rounded-base p-12 text-center">
-                    <div class="text-6xl">📍</div>
-                    <h3 class="font-bold mt-3">Belum Ada Alamat</h3>
-                    <p class="text-body">Tambahkan alamat pertamamu</p>
-                </div>
-            @endforelse
-        </div>
-
+        {{-- Add New Address --}}
         <div class="px-6 pb-6">
             <button id="show-address-form" class="bg-primary text-white px-5 py-2.5 rounded-base w-full mx-auto">
                 + Tambah Alamat
             </button>
         </div>
 
-        <div id="address-form" class="hidden border border-default rounded-base p-6 shadow-xl mb-5">
-
-            <div class="mb-5">
-                <h1 class="text-2xl font-bold">Masukkan Alamat Baru</h1>
-            </div>
-
-            <form action="{{ route('my-addresses.store') }}" method="POST" class="grid grid-cols-2 gap-3">
-                @csrf
-
-                <div class="col-span-2">
-                    <x-forms.label-input label="Label" for="label" placeholder="Rumah / Kantor / etc." isRequired />
-
-                    <label class="inline-flex items-center cursor-pointer">
-                        <input type="checkbox" name="is_default" value="1" class="sr-only peer"
-                            @if ($addresses->isEmpty()) checked @endif>
-                        <div
-                            class="relative w-9 h-5 bg-neutral-quaternary peer-focus:outline-none peer-focus:ring-1 peer-focus:ring-secondary dark:peer-focus:ring-secondary rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full after:content-[''] after:absolute after:top-0.5 after:inset-s-0.5 after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary">
-                        </div>
-                        <span class="select-none ms-3 text-sm font-medium text-heading">Atur sebagai Alamat Utama</span>
-                    </label>
-
-                </div>
-
-                <x-forms.label-input label="Nama Penerima" for="recipient_name" isRequired />
-
-                <x-forms.label-input label="Nomor HP" for="recipient_phone" isRequired />
-
-                <div class="col-span-2">
-                    <x-forms.textarea label="Alamat Lengkap" for="address" isRequired />
-                </div>
-
-                <input type="hidden" id="latitude" name="latitude">
-                <input type="hidden" id="longitude" name="longitude">
-                <input type="hidden" name="province" id="province">
-                <input type="hidden" name="city" id="city">
-                <input type="hidden" name="district" id="district">
-                <input type="hidden" name="postal_code" id="postal_code">
-
-                <div id="address-map" class="col-span-2 h-100 rounded-base border mt-5">
-                </div>
-
-                <button class="w-fit mt-5 bg-primary text-white px-5 py-2.5 rounded-base">
-                    Simpan Alamat
-                </button>
-            </form>
-        </div>
+        <x-front.user-addresses.form-add :addresses="$addresses" :editingAddress="$editingAddress" />
     </div>
 
 
+    {{-- Kembali --}}
+    <a href="{{ route('products') }}"
+        class="fixed bottom-8 left-10 z-50
+           flex items-center gap-2
+           px-4 py-3
+           bg-primary text-white
+           rounded-full
+           shadow-lg
+           border border-gray-200
+           hover:shadow-xl
+           hover:-translate-y-0.5
+           transition">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+
+        <span class="text-sm font-medium">
+            Kembali
+        </span>
+    </a>
+
+
     @push('scripts')
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+
+                document.querySelectorAll('.delete-form-address').forEach(form => {
+
+                    form.addEventListener('submit', function(e) {
+                        e.preventDefault();
+
+                        Swal.fire({
+                            title: 'Hapus Alamat?',
+                            text: 'Alamat yang dihapus tidak dapat dikembalikan.',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#ec4899',
+                            cancelButtonColor: '#6b7280',
+                            confirmButtonText: 'Ya, Hapus',
+                            cancelButtonText: 'Batal',
+                        }).then(result => {
+
+                            if (result.isConfirmed) {
+                                form.submit();
+                            }
+
+                        });
+                    });
+
+                });
+
+            });
+        </script>
+
         <script>
             let map;
             let marker;
             let mapInitialized = false;
             let lastValidLat = null;
             let lastValidLng = null;
+            const editLat = "{{ $editingAddress?->latitude }}";
+            const editLng = "{{ $editingAddress?->longitude }}";
 
             const btn = document.getElementById('show-address-form');
             const form = document.getElementById('address-form');
 
             btn.addEventListener('click', () => {
-
                 form.classList.toggle('hidden');
 
                 // form dibuka pertama kali
@@ -142,7 +110,19 @@
                     ).addTo(map);
 
                     // cek lokasi
-                    if (navigator.geolocation) {
+                    if (editLat && editLng) {
+
+                        map.setView(
+                            [editLat, editLng],
+                            16
+                        );
+
+                        marker = L.marker([
+                            editLat,
+                            editLng
+                        ]).addTo(map);
+
+                    } else if (navigator.geolocation) {
                         navigator.geolocation.getCurrentPosition(
 
                             async function(position) {
@@ -176,8 +156,9 @@
 
                     }
 
-                    map.on('click', async function(e) {
 
+                    // Klik map untuk ubah lokasi
+                    map.on('click', async function(e) {
                         const lat = e.latlng.lat;
                         const lng = e.latlng.lng;
 
@@ -208,6 +189,12 @@
                     }, 300);
                 }
             });
+
+
+            // buka form apabila edit
+            @if ($editingAddress)
+                btn.click();
+            @endif
 
 
             // Func get Address Detail
@@ -262,5 +249,4 @@
             }
         </script>
     @endpush
-
 </x-layouts.home>
