@@ -1,5 +1,9 @@
 <x-layouts.home title="My Addresses">
     <div>
+        <div class="ms-5 -mb-3">
+            <x-dashboard.header title="Alamat Saya" subTitle="Kelola alamat anda untuk pengiriman produk." />
+        </div>
+
         <div class="grid md:grid-cols-2 gap-4 p-6">
             @forelse($addresses as $address)
                 <div class="border rounded-base p-4">
@@ -64,7 +68,7 @@
                     <x-forms.label-input label="Label" for="label" placeholder="Rumah / Kantor / etc." isRequired />
 
                     <label class="inline-flex items-center cursor-pointer">
-                        <input type="checkbox" name="is_default" value="" class="sr-only peer"
+                        <input type="checkbox" name="is_default" value="1" class="sr-only peer"
                             @if ($addresses->isEmpty()) checked @endif>
                         <div
                             class="relative w-9 h-5 bg-neutral-quaternary peer-focus:outline-none peer-focus:ring-1 peer-focus:ring-secondary dark:peer-focus:ring-secondary rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full after:content-[''] after:absolute after:top-0.5 after:inset-s-0.5 after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary">
@@ -76,7 +80,7 @@
 
                 <x-forms.label-input label="Nama Penerima" for="recipient_name" isRequired />
 
-                <x-forms.label-input label="Nomor HP" for="phone" isRequired />
+                <x-forms.label-input label="Nomor HP" for="recipient_phone" isRequired />
 
                 <div class="col-span-2">
                     <x-forms.textarea label="Alamat Lengkap" for="address" isRequired />

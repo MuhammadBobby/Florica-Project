@@ -12,8 +12,9 @@ class UserAddressController extends Controller
     // ============ USER ADDRESS ROUTES ============
     public function index()
     {
+        // ambil addrss utaama duluan
         $addresses = UserAddress::where('user_id', Auth::user()->id)
-            ->latest()
+            ->orderBy('is_default', 'desc')
             ->get();
 
         $storeProfile = StoreProfile::first();
@@ -30,10 +31,15 @@ class UserAddressController extends Controller
         $validated = $request->validate([
             'label' => 'required|string|max:100',
             'recipient_name' => 'required|string|max:255',
-            'phone' => 'required|string|max:20',
+            'recipient_phone' => 'required|string|max:20',
             'address' => 'required|string',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
+            'is_default' => 'nullable|boolean',
+            'district' => 'nullable|string',
+            'city' => 'nullable|string',
+            'province' => 'nullable|string',
+            'postal_code' => 'nullable|string',
         ]);
 
         $distanceKm = null;
@@ -54,10 +60,21 @@ class UserAddressController extends Controller
             );
         }
 
+
+        $isDefault = $request->boolean('is_default');
+
+        if ($isDefault) {
+            UserAddress::where('user_id', Auth::user()->id)
+                ->update([
+                    'is_default' => false,
+                ]);
+        }
+
         UserAddress::create([
             ...$validated,
+            'is_default' => $isDefault,
+            'user_id' => Auth::user()->id,
             'distanceKm' => $distanceKm,
-            // 'is_default' => UserAddress::where('user_id', Auth::user()->id)->count() === 0
         ]);
 
         return back()->with(
