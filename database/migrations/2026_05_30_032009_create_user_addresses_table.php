@@ -23,7 +23,6 @@ return new class extends Migration
             $table->text('address');
             $table->decimal('latitude', 10, 7)->nullable();
             $table->decimal('longitude', 10, 7)->nullable();
-            $table->decimal('distanceKm', 8, 2)->nullable();
             $table->string('district')->nullable();
             $table->string('city')->nullable();
             $table->string('province')->nullable();

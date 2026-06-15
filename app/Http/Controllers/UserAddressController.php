@@ -50,23 +50,23 @@ class UserAddressController extends Controller
             'postal_code' => 'nullable|numeric',
         ]);
 
-        $distanceKm = null;
+        // $distanceKm = null;
 
-        $store = StoreProfile::first();
+        // $store = StoreProfile::first();
 
-        if (
-            $store &&
-            $store->latitude &&
-            $store->longitude
-        ) {
+        // if (
+        //     $store &&
+        //     $store->latitude &&
+        //     $store->longitude
+        // ) {
 
-            $distanceKm = $this->calculateDistance(
-                $store->latitude,
-                $store->longitude,
-                $validated['latitude'],
-                $validated['longitude']
-            );
-        }
+        //     $distanceKm = $this->calculateDistance(
+        //         $store->latitude,
+        //         $store->longitude,
+        //         $validated['latitude'],
+        //         $validated['longitude']
+        //     );
+        // }
 
         $isDefault = $request->boolean('is_default');
 
@@ -81,7 +81,6 @@ class UserAddressController extends Controller
             ...$validated,
             'is_default' => $isDefault,
             'user_id' => Auth::user()->id,
-            'distanceKm' => $distanceKm,
         ]);
 
         return back()->with(
@@ -113,23 +112,6 @@ class UserAddressController extends Controller
             'postal_code' => 'nullable|numeric',
         ]);
 
-        $distanceKm = null;
-
-        $store = StoreProfile::first();
-
-        if (
-            $store &&
-            $store->latitude &&
-            $store->longitude
-        ) {
-            $distanceKm = $this->calculateDistance(
-                $store->latitude,
-                $store->longitude,
-                $validated['latitude'],
-                $validated['longitude']
-            );
-        }
-
         $isDefault = $request->boolean('is_default');
 
         // update yg lain kecuali request
@@ -143,8 +125,7 @@ class UserAddressController extends Controller
 
         $my_address->update([
             ...$validated,
-            'is_default' => $isDefault,
-            'distanceKm' => $distanceKm,
+            'is_default' => $isDefault
         ]);
 
         return redirect()

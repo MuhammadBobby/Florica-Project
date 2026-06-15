@@ -19,7 +19,6 @@ class UserAddress extends Model
         'province',
         'is_default',
         'postal_code',
-        'distanceKm',
     ];
 
     protected $casts = [
