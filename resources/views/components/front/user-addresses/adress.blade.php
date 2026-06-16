@@ -57,12 +57,6 @@
                 {{ $address->district }}, {{ $address->city }}, {{ $address->province }}, ID
                 {{ $address->postal_code }}
             </p>
-
-            @if ($address->distance_km)
-                <p class="mt-3 text-primary font-semibold">
-                    {{ $address->distanceKm }} KM
-                </p>
-            @endif
         </div>
 
     @empty

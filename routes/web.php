@@ -53,6 +53,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Checkout
     Route::post('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+    Route::post('/checkout/address', [CheckoutController::class, 'changeAddress'])->name('checkout.change-address');
 
     // Adress
     Route::resource('my-addresses', UserAddressController::class)->only(['index', 'store', 'update', 'destroy']);
