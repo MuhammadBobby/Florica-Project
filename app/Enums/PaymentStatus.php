@@ -10,11 +10,8 @@ enum PaymentStatus: string
 
     case Failed = 'failed';
 
-    case Expired = 'expired';
-
     case Cancelled = 'cancelled';
 
-    case Refunded = 'refunded';
 
     public function label(): string
     {
@@ -22,9 +19,7 @@ enum PaymentStatus: string
             self::Pending => 'Pending',
             self::Paid => 'Paid',
             self::Failed => 'Failed',
-            self::Expired => 'Expired',
             self::Cancelled => 'Cancelled',
-            self::Refunded => 'Refunded',
         };
     }
 }

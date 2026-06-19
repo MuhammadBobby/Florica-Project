@@ -26,6 +26,9 @@
 
     @stack('scripts')
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
+    {{-- midtrans --}}
+    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('midtrans.client_key') }}">
+    </script>
     {{-- swear alert --}}
     <script>
         document.addEventListener('DOMContentLoaded', () => {

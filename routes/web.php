@@ -54,6 +54,8 @@ Route::middleware(['auth'])->group(function () {
     // Checkout
     Route::post('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
     Route::post('/checkout/address', [CheckoutController::class, 'changeAddress'])->name('checkout.change-address');
+    Route::post('/checkout/process', [CheckoutController::class, 'process'])->name('checkout.process');
+    Route::post('/checkout/payment-callback', [CheckoutController::class, 'paymentCallback'])->name('checkout.payment-callback');
 
     // Adress
     Route::resource('my-addresses', UserAddressController::class)->only(['index', 'store', 'update', 'destroy']);

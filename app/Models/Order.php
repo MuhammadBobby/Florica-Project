@@ -13,7 +13,6 @@ class Order extends Model
     protected $fillable = [
         'invoice_number',
         'user_id',
-        'shipping_region_id',
         'recipient_name',
         'recipient_phone',
         'shipping_address',
@@ -35,11 +34,6 @@ class Order extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function shippingRegion()
-    {
-        return $this->belongsTo(ShippingRegion::class);
     }
 
     public function items()

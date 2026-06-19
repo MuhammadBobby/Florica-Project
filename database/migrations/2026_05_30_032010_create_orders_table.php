@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('invoice_number')->unique();
             $table->foreignId('user_id')->constrained('users')->cascadeOnUpdate()->restrictOnDelete();
-            $table->foreignId('shipping_region_id')->constrained('shipping_regions')->cascadeOnUpdate()->restrictOnDelete();
             $table->string('recipient_name');
             $table->string('recipient_phone');
             $table->text('shipping_address');

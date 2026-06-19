@@ -2,7 +2,7 @@
 
 <div class="bg-white border shadow-xl rounded-base p-5">
     {{-- Catatan --}}
-    <x-forms.textarea label="Catatan" for="note" name="note" placeholder="Masukkan catatan tambahan" />
+    <x-forms.textarea label="Catatan" for="shipping_note" name="shipping_note" placeholder="Masukkan catatan tambahan" />
 
     <h3 class="font-bold mb-5">
         Ringkasan Belanja
