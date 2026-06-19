@@ -22,7 +22,7 @@ return new class extends Migration
             $table->decimal('subtotal', 15, 2);
             $table->decimal('shipping_cost', 15, 2);
             $table->decimal('total_amount', 15, 2);
-            $table->enum('order_status', ['pending', 'confirmed', 'packed', 'shipped', 'completed', 'cancelled'])->default('pending');
+            $table->enum('order_status', ['pending', 'success', 'confirmed', 'packed', 'shipped', 'completed', 'cancelled'])->default('pending');
             $table->text('shipping_note')->nullable();
             $table->timestamp('paid_at')->nullable();
             $table->timestamps();

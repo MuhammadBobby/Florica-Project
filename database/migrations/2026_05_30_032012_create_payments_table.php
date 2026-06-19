@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('midtrans_order_id');
             $table->string('transaction_id')->nullable();
             $table->decimal('gross_amount', 15, 2);
-            $table->enum('payment_status', ['pending', 'settlement', 'expire', 'cancel'])->default('pending');
+            $table->enum('payment_status', ['pending', 'paid', 'failed', 'cancelled'])->default('pending');
             $table->text('snap_token')->nullable();
             $table->json('raw_response')->nullable();
             $table->timestamp('paid_at')->nullable();
