@@ -10,6 +10,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserAddressController;
+use App\Http\Controllers\UserOrderController;
 use Illuminate\Support\Facades\Route;
 
 // ============= MAIN ROUTES =============
@@ -59,4 +60,8 @@ Route::middleware(['auth'])->group(function () {
 
     // Adress
     Route::resource('my-addresses', UserAddressController::class)->only(['index', 'store', 'update', 'destroy']);
+
+    // Orders
+    Route::get('/my-orders', [UserOrderController::class, 'index'])->name('my-orders.index');
+    Route::post('/my-orders/{order}/cancel', [UserOrderController::class, 'cancel'])->name('my-orders.cancel');
 });

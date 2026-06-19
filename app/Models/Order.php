@@ -60,4 +60,18 @@ class Order extends Model
     {
         return $this->belongsTo(UserAddress::class);
     }
+
+    public function getStatusColorAttribute()
+    {
+        return match ($this->order_status) {
+            OrderStatus::Pending => 'bg-yellow-100 text-yellow-700',
+            OrderStatus::Success => 'bg-blue-100 text-blue-700',
+            OrderStatus::Confirmed => 'bg-green-100 text-green-700',
+            OrderStatus::Packed => 'bg-purple-100 text-purple-700',
+            OrderStatus::Shipped => 'bg-green-100 text-green-700',
+            OrderStatus::Completed => 'bg-green-100 text-green-700',
+            OrderStatus::Cancelled => 'bg-red-100 text-red-700',
+            default => 'bg-gray-100 text-gray-700',
+        };
+    }
 }

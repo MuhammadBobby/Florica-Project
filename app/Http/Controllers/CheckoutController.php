@@ -13,7 +13,6 @@ use App\Models\UserAddress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Services\MidtransService;
-use Midtrans\Config;
 use Midtrans\Snap;
 use Illuminate\Support\Facades\DB;
 

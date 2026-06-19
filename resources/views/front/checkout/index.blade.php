@@ -117,7 +117,7 @@
                                     }).then(() => {
 
                                         window.location.href =
-                                            `/orders`;
+                                            `/my-orders`;
 
                                     });
                                 },
@@ -135,7 +135,7 @@
                                     }).then(() => {
 
                                         window.location.href =
-                                            `/orders`;
+                                            `/my-orders`;
 
                                     });
                                 },
@@ -161,7 +161,7 @@
                                     }).then(() => {
 
                                         window.location.href =
-                                            '/orders';
+                                            '/my-orders';
 
                                     });
                                 }

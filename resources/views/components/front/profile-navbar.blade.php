@@ -64,7 +64,7 @@
 
             </a>
 
-            <a href="{{ route('orders.index') }}"
+            <a href="{{ route('my-orders.index') }}"
                 class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-neutral-secondary-medium">
 
                 <span>📦</span>
