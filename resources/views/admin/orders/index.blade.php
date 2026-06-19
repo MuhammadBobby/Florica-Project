@@ -66,5 +66,106 @@
 
             });
         </script>
+
+        <script>
+            document
+                .querySelectorAll('.order-status-btn')
+                .forEach(button => {
+
+                    button.addEventListener(
+                        'click',
+                        async function() {
+
+                            const orderId =
+                                this.dataset.order;
+
+                            const status =
+                                this.dataset.status;
+
+                            const label =
+                                this.dataset.label;
+
+                            const result =
+                                await Swal.fire({
+
+                                    title: label + '?',
+
+                                    text: 'Status pesanan akan diperbarui.',
+
+                                    icon: status === 'cancelled' ?
+                                        'warning' : 'question',
+
+                                    showCancelButton: true,
+
+                                    confirmButtonText: 'Ya',
+
+                                    cancelButtonText: 'Batal'
+                                });
+
+                            if (!result.isConfirmed) {
+                                return;
+                            }
+
+                            try {
+
+                                const response =
+                                    await fetch(
+                                        `/dashboard/orders/${orderId}/status`, {
+                                            method: 'PATCH',
+
+                                            headers: {
+                                                'Content-Type': 'application/json',
+
+                                                'X-CSRF-TOKEN': document
+                                                    .querySelector(
+                                                        'meta[name="csrf-token"]'
+                                                    )
+                                                    .content
+                                            },
+
+                                            body: JSON.stringify({
+                                                status
+                                            })
+                                        }
+                                    );
+
+                                const data =
+                                    await response.json();
+
+                                if (!data.success) {
+
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Gagal',
+                                        text: data.message
+                                    });
+
+                                    return;
+                                }
+
+                                await Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berhasil',
+                                    text: data.message
+                                });
+
+                                location.reload();
+
+                            } catch (error) {
+
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Terjadi Kesalahan'
+                                });
+
+                                console.error(error);
+
+                            }
+
+                        }
+                    );
+
+                });
+        </script>
     @endpush
 </x-layouts.dashboard>

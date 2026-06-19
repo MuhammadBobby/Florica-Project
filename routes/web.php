@@ -39,7 +39,8 @@ Route::middleware(['auth', 'role:admin'])
         Route::put('/store-profile', [DashboardController::class, 'updateStoreProfile'])->name('store-profile.update');
         Route::resource('categories', CategoryController::class);
         Route::resource('products', ProductController::class);
-        Route::resource('orders', OrderController::class);
+        Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
+        Route::patch('/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.update-status');
         Route::resource('customers', CustomerController::class);
     });
 

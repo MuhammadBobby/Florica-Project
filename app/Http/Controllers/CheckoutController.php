@@ -302,7 +302,8 @@ class CheckoutController extends Controller
                     ]);
 
                     $order->update([
-                        'order_status' => OrderStatus::Success->value
+                        'order_status' => OrderStatus::Success->value,
+                        'paid_at' => now(),
                     ]);
 
                     // hapus item cart

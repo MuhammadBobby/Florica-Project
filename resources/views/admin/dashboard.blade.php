@@ -79,7 +79,7 @@
                                 </td>
 
                                 <td>
-                                    {{ ucfirst($order->order_status) }}
+                                    {{ ucfirst($order->order_status->value) }}
                                 </td>
                             </tr>
                         @empty

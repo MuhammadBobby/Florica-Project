@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class OrderController extends Controller
 {
@@ -15,59 +16,64 @@ class OrderController extends Controller
         $orders = Order::query()
             ->with([
                 'user',
-                'orderItems',
-            ])
-            ->latest()
-            ->paginate(10);
+                'items.product.primaryImage',
+                'payment'
+            ])->latest()->paginate(10);
 
         return view('admin.orders.index', compact('orders'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+    // =========== UPDATE ORDER STATUS =============
+    public function updateStatus(
+        Request $request,
+        Order $order
+    ) {
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        $validated = $request->validate([
+            'status' => [
+                'required',
+                Rule::in([
+                    'confirmed',
+                    'packed',
+                    'shipped',
+                    'completed',
+                    'cancelled'
+                ])
+            ]
+        ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+        $currentStatus = $order->order_status->value;
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+        $allowedTransitions = [
+            'success' => ['confirmed'],
+            'confirmed' => ['packed'],
+            'packed' => ['shipped'],
+            'shipped' => ['completed'],
+            'pending' => ['cancelled'],
+        ];
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        if (
+            !isset($allowedTransitions[$currentStatus]) ||
+            !in_array(
+                $validated['status'],
+                $allowedTransitions[$currentStatus]
+            )
+        ) {
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Perubahan status tidak valid.'
+            ], 422);
+        }
+
+        $order->update([
+            'order_status' => $validated['status']
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Status berhasil diperbarui.'
+        ]);
     }
 }
