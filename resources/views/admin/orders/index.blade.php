@@ -1,6 +1,50 @@
+@php
+    use App\Enums\OrderStatus;
+
+    $statusOptions = [
+        [
+            'value' => OrderStatus::Pending->value,
+            'label' => OrderStatus::Pending->name,
+        ],
+        [
+            'value' => OrderStatus::Success->value,
+            'label' => OrderStatus::Success->name,
+        ],
+        [
+            'value' => OrderStatus::Confirmed->value,
+            'label' => OrderStatus::Confirmed->name,
+        ],
+        [
+            'value' => OrderStatus::Packed->value,
+            'label' => OrderStatus::Packed->name,
+        ],
+        [
+            'value' => OrderStatus::Shipped->value,
+            'label' => OrderStatus::Shipped->name,
+        ],
+        [
+            'value' => OrderStatus::Completed->value,
+            'label' => OrderStatus::Completed->name,
+        ],
+        [
+            'value' => OrderStatus::Cancelled->value,
+            'label' => OrderStatus::Cancelled->name,
+        ],
+    ];
+@endphp
+
+
 <x-layouts.dashboard title="Orders">
     <x-dashboard.header title="Pesanan Pelanggan" subTitle="Lihat semua pesanan pelanggan Florica Blooms." />
 
+    {{-- Filter --}}
+    <div class="flex my-5 gap-3">
+        {{-- Status --}}
+        <x-dashboard.filter-dropdown label="Status Pemesanan" query="order_status" :options="$statusOptions" />
+
+        {{-- Date --}}
+        <x-dashboard.filter-datepicker />
+    </div>
 
     {{-- Table --}}
     @if ($orders->isEmpty())

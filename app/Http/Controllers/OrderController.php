@@ -5,22 +5,50 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Carbon\Carbon;
 
 class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $orders = Order::query()
             ->with([
                 'user',
                 'items.product.primaryImage',
                 'payment'
-            ])->latest()->paginate(10);
+            ])
 
-        return view('admin.orders.index', compact('orders'));
+            ->when(
+                $request->filled('order_status'),
+                fn($query) =>
+                $query->where(
+                    'order_status',
+                    $request->order_status
+                )
+            )
+
+            ->when(
+                $request->filled('date'),
+                fn($query) =>
+                $query->whereDate(
+                    'created_at',
+                    Carbon::parse(
+                        $request->date
+                    )
+                )
+            )
+
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
+
+        return view(
+            'admin.orders.index',
+            compact('orders')
+        );
     }
 
 
