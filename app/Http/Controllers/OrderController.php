@@ -43,6 +43,16 @@ class OrderController extends Controller
                 )
             )
 
+            ->when(
+                $request->search,
+                fn($q, $search)
+                => $q->where(
+                    'invoice_number',
+                    'like',
+                    "%{$search}%"
+                )
+            )
+
             ->latest()
             ->paginate(10)
             ->withQueryString();

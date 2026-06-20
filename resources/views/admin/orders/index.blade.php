@@ -38,18 +38,19 @@
     <x-dashboard.header title="Pesanan Pelanggan" subTitle="Lihat semua pesanan pelanggan Florica Blooms." />
 
     {{-- Filter --}}
-    <div class="flex justify-between items-center my-5 gap-10">
+    <div class="flex flex-col gap-5 my-5">
         <div class="flex items-center gap-3">
             {{-- Status --}}
             <x-dashboard.filter-dropdown label="Status Pemesanan" query="order_status" :options="$statusOptions" />
 
             {{-- Date --}}
-            <x-dashboard.filter-datepicker />
+            <x-dashboard.orders.filter />
         </div>
 
         {{-- Export --}}
-        <a id="btn-export-order" href="#" class="px-4 py-2 bg-primary text-white rounded-base hover:bg-pink-700">
-            Export PDF
+        <a id="btn-export-order" href="#"
+            class="px-4 py-2 bg-white border border-primary text-primary rounded-base hover:bg-primary hover:text-white w-fit">
+            Export PDF Pesanan
         </a>
     </div>
 

@@ -8,6 +8,9 @@
                     No.
                 </th>
                 <th scope="col" class="px-6 py-3 font-medium">
+                    No. Invoice
+                </th>
+                <th scope="col" class="px-6 py-3 font-medium">
                     Pelanggan
                 </th>
                 <th scope="col" class="px-6 py-3 font-medium">
@@ -33,6 +36,9 @@
                     <th scope="row" class="w-fit p-1 px-3 text-center font-medium text-heading max-w-xs">
                         {{ $index + 1 + ($orders->currentPage() - 1) * $orders->perPage() }}
                     </th>
+                    <td class="px-6 py-4 font-semibold">
+                        {{ $order->invoice_number }}
+                    </td>
                     <td class="px-6 py-4 font-semibold flex flex-col uppercase">
                         <span>{{ $order->recipient_name }}</span>
                         <span
