@@ -38,12 +38,19 @@
     <x-dashboard.header title="Pesanan Pelanggan" subTitle="Lihat semua pesanan pelanggan Florica Blooms." />
 
     {{-- Filter --}}
-    <div class="flex my-5 gap-3">
-        {{-- Status --}}
-        <x-dashboard.filter-dropdown label="Status Pemesanan" query="order_status" :options="$statusOptions" />
+    <div class="flex justify-between items-center my-5 gap-10">
+        <div class="flex items-center gap-3">
+            {{-- Status --}}
+            <x-dashboard.filter-dropdown label="Status Pemesanan" query="order_status" :options="$statusOptions" />
 
-        {{-- Date --}}
-        <x-dashboard.filter-datepicker />
+            {{-- Date --}}
+            <x-dashboard.filter-datepicker />
+        </div>
+
+        {{-- Export --}}
+        <a id="btn-export-order" href="#" class="px-4 py-2 bg-primary text-white rounded-base hover:bg-pink-700">
+            Export PDF
+        </a>
     </div>
 
     {{-- Table --}}
@@ -209,6 +216,25 @@
                         }
                     );
 
+                });
+        </script>
+
+        {{-- handle export --}}
+        <script>
+            document
+                .getElementById('btn-export-order')
+                .addEventListener('click', function(e) {
+
+                    e.preventDefault();
+
+                    const params =
+                        new URLSearchParams(
+                            window.location.search
+                        );
+
+                    window.location.href =
+                        "{{ route('orders.export') }}?" +
+                        params.toString();
                 });
         </script>
     @endpush

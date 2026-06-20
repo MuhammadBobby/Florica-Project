@@ -41,6 +41,7 @@ Route::middleware(['auth', 'role:admin'])
         Route::resource('products', ProductController::class);
         Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
         Route::patch('/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.update-status');
+        Route::get('/orders/export', [OrderController::class, 'export'])->name('orders.export');
         Route::resource('customers', CustomerController::class);
     });
 

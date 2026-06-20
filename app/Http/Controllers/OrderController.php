@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\OrderStatus;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -53,11 +54,8 @@ class OrderController extends Controller
 
 
     // =========== UPDATE ORDER STATUS =============
-    public function updateStatus(
-        Request $request,
-        Order $order
-    ) {
-
+    public function updateStatus(Request $request, Order $order)
+    {
         $validated = $request->validate([
             'status' => [
                 'required',
@@ -103,5 +101,81 @@ class OrderController extends Controller
             'success' => true,
             'message' => 'Status berhasil diperbarui.'
         ]);
+    }
+
+
+    // ========== EXPORT ORDER ==============
+    public function export(Request $request)
+    {
+        $orders = Order::query()
+            ->with([
+                'user',
+                'items.product',
+                'payment'
+            ])
+
+            ->when(
+                $request->filled('order_status'),
+                fn($q) =>
+                $q->where(
+                    'order_status',
+                    $request->order_status
+                )
+            )
+
+            ->when(
+                $request->filled('date'),
+                fn($q) =>
+                $q->whereDate(
+                    'created_at',
+                    Carbon::parse(
+                        $request->date
+                    )
+                )
+            )
+
+            ->latest()
+            ->get();
+
+        $completedOrders =
+            $orders->where(
+                'order_status',
+                OrderStatus::Completed->value
+            );
+
+        $processOrders =
+            $orders->filter(
+                fn($order) =>
+                in_array(
+                    $order->order_status->value,
+                    [
+                        OrderStatus::Confirmed->value,
+                        OrderStatus::Packed->value,
+                        OrderStatus::Shipped->value
+                    ]
+                )
+            );
+
+        $pendingOrders =
+            $orders->where(
+                'order_status',
+                OrderStatus::Pending->value
+            );
+
+        $failedOrders =
+            $orders->where(
+                'order_status',
+                OrderStatus::Cancelled->value
+            );
+
+        return view(
+            'admin.orders.export',
+            compact(
+                'completedOrders',
+                'processOrders',
+                'pendingOrders',
+                'failedOrders'
+            )
+        );
     }
 }
