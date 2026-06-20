@@ -9,6 +9,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserAddressController;
 use App\Http\Controllers\UserOrderController;
 use Illuminate\Support\Facades\Route;
@@ -68,4 +69,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/my-orders/{order}/cancel', [UserOrderController::class, 'cancel'])->name('my-orders.cancel');
     Route::get('/my-orders/{order}/receipt', [UserOrderController::class, 'receipt'])->name('my-orders.receipt');
     Route::post('/my-orders/review', [UserOrderController::class, 'storeOrderReview'])->name('my-orders.review');
+
+    // Profile
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 });

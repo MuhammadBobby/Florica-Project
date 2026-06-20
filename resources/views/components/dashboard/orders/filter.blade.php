@@ -19,7 +19,7 @@
     </div>
 
     {{-- Search --}}
-    <div class="relative flex-1 min-w-[250px]">
+    <div class="relative flex-1 min-w-62.5">
 
         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
 

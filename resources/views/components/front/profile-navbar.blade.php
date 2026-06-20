@@ -1,7 +1,7 @@
 <div class="relative">
 
     <button id="profileDropdownButton" data-dropdown-toggle="profileDropdown"
-        class="flex items-center gap-3 px-2 py-1 rounded-full hover:bg-neutral-secondary-medium">
+        class="flex items-center gap-3 px-2 py-1 rounded-full">
 
         <img src="{{ Auth::user()->avatar ? asset('storage/' . Auth::user()->avatar) : asset('/assets/elements/avatar.webp') }}"
             class="w-10 h-10 rounded-full object-cover">
@@ -49,7 +49,8 @@
         {{-- MENU --}}
         <div class="p-2">
 
-            <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-neutral-secondary-medium">
+            <a href="{{ route('profile.index') }}"
+                class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-neutral-secondary-medium">
 
                 <span>👤</span>
                 <span>Profile Saya</span>
