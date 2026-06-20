@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\OrderStatus;
 use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Carbon\Carbon;
@@ -96,6 +97,18 @@ class OrderController extends Controller
         $order->update([
             'order_status' => $validated['status']
         ]);
+
+        // Update stock apabila Cancel
+        if ($validated['status'] == 'cancelled') {
+            foreach ($order->items as $item) {
+                Product::query()
+                    ->where('id', $item->product_id)
+                    ->increment(
+                        'stock',
+                        $item->quantity
+                    );
+            }
+        }
 
         return response()->json([
             'success' => true,

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Cart;
 use App\Models\CartItem;
+use App\Models\Product;
 
 class CartController extends Controller
 {
@@ -50,13 +51,39 @@ class CartController extends Controller
             ->where('product_id', $validated['product_id'])
             ->first();
 
+        $product = Product::findOrFail(
+            $request->product_id
+        );
+
         // If the product is already in the cart, update the quantity
         if ($item) {
+            $newQty = $item->quantity + $request->quantity;
+
+            if (
+                $newQty >
+                $product->stock
+            ) {
+                return back()->with(
+                    'error',
+                    "Stok {$product->name} hanya tersisa {$product->stock}"
+                );
+            }
+
             $item->increment(
                 'quantity',
                 $validated['quantity']
             );
         } else {
+            // Validate stock
+            if (
+                $request->quantity > $product->stock
+            ) {
+                return back()->with(
+                    'error',
+                    "Stok {$product->name} hanya tersisa {$product->stock}"
+                );
+            }
+
             CartItem::create([
                 'cart_id' => $cart->id,
                 'product_id' => $validated['product_id'],
@@ -71,7 +98,6 @@ class CartController extends Controller
         Request $request,
         CartItem $cartItem
     ) {
-
         $request->validate([
             'quantity' => [
                 'required',
@@ -79,6 +105,14 @@ class CartController extends Controller
                 'min:1',
             ],
         ]);
+
+        // validte stock
+        if ($request->quantity > $cartItem->product->stock) {
+            return back()->with(
+                'error',
+                "Stok {$cartItem->product->name} hanya tersisa {$cartItem->product->stock}"
+            );
+        }
 
         $cartItem->update([
             'quantity' => $request->quantity,

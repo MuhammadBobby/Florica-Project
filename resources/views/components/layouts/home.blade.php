@@ -20,6 +20,20 @@
             </script>
         @endif
 
+        @if (session('error'))
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal',
+                        text: @json(session('error')),
+                        timer: 2000,
+                        showConfirmButton: false,
+                    });
+                });
+            </script>
+        @endif
+
         <script>
             document.addEventListener('DOMContentLoaded', () => {
 

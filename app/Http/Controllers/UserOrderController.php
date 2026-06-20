@@ -6,6 +6,7 @@ use App\Enums\OrderStatus;
 use App\Enums\PaymentStatus;
 use App\Models\Order;
 use App\Models\Payment;
+use App\Models\Product;
 use App\Models\ProductReview;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -41,6 +42,16 @@ class UserOrderController extends Controller
                         $order->update([
                             'order_status' => OrderStatus::Success->value
                         ]);
+
+                        // update stock
+                        foreach ($order->items as $item) {
+                            Product::query()
+                                ->where('id', $item->product_id)
+                                ->decrement(
+                                    'stock',
+                                    $item->quantity
+                                );
+                        }
 
                         break;
 
@@ -116,6 +127,16 @@ class UserOrderController extends Controller
         $order->payment()->update([
             'payment_status' => 'failed'
         ]);
+
+        // update stock
+        foreach ($order->items as $item) {
+            Product::query()
+                ->where('id', $item->product_id)
+                ->increment(
+                    'stock',
+                    $item->quantity
+                );
+        }
 
         return back()
             ->with('success', 'Order cancelled successfully');

@@ -8,6 +8,7 @@ use App\Models\CartItem;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Payment;
+use App\Models\Product;
 use App\Models\StoreProfile;
 use App\Models\UserAddress;
 use Illuminate\Http\Request;
@@ -35,6 +36,7 @@ class CheckoutController extends Controller
                 );
         }
 
+        // ============= CART ITEMS =============
         $cartItems = CartItem::query()
             ->with(['product.primaryImage',])
             ->whereIn('id', $itemIds)
@@ -46,13 +48,44 @@ class CheckoutController extends Controller
             ->get();
 
         if ($cartItems->isEmpty()) {
-            return redirect()->route('cart.index');
+            return redirect()->route('cart.index')
+                ->with('error', 'Keranjang kosong.');
         }
 
+        // ============= CHECK STOCK =============
+        foreach ($cartItems as $item) {
+            $stock = $item->product->stock;
+
+            if ($stock <= 0) {
+                $item->delete();
+
+                return redirect()->route('cart.index')
+                    ->with('error', "Stok {$item->product->name} telah habis.");
+            }
+
+            if (
+                $item->quantity > $stock
+            ) {
+                $item->update([
+                    'quantity' => $stock
+                ]);
+
+                return redirect()->route('cart.index')
+                    ->with('error', "Stok {$item->product->name} hanya tersisa {$stock}");
+            }
+        }
+
+        // ============= ADDRESS =============
         $address = UserAddress::query()
             ->where('user_id', Auth::id())
             ->where('is_default', true)
             ->first();
+
+        // ============ CHECK ADDRESS ============
+        if (!$address) {
+            return redirect()->route('user.address.index')
+                ->with('error', 'Silahkan Masukkan Alamat Terlebih Dahulu.');
+        }
 
         $subtotal = $cartItems->sum(
             fn($item) =>
@@ -311,6 +344,16 @@ class CheckoutController extends Controller
                         'order_status' => OrderStatus::Success->value,
                         'paid_at' => now(),
                     ]);
+
+                    // update stock
+                    foreach ($order->items as $item) {
+                        Product::query()
+                            ->where('id', $item->product_id)
+                            ->decrement(
+                                'stock',
+                                $item->quantity
+                            );
+                    }
 
                     // hapus item cart
                     CartItem::query()

@@ -44,7 +44,7 @@
         <input type="search" name="search" id="search-dropdown" value="{{ request('search') }}"
             class="px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm focus:ring-default-medium focus:border-default-medium block w-full placeholder:text-body"
             placeholder="Search for products">
-        <button type="button"
+        <button type="submit"
             class="inline-flex items-center  text-white bg-primary hover:bg-pink-700 box-border border border-transparent focus:ring-4 focus:ring-primary-medium shadow-xs font-medium leading-5 rounded-e-base text-sm px-4 py-2.5 focus:outline-none">
             <svg class="w-4 h-4 me-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
                 height="24" fill="none" viewBox="0 0 24 24">

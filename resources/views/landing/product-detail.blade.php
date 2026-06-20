@@ -93,10 +93,10 @@
                             Tambah ke Keranjang
                         </button>
 
-                        <button
+                        {{-- <button
                             class="flex-1 bg-primary hover:bg-pink-700 text-white font-semibold py-3 rounded-full transition">
                             Beli Sekarang
-                        </button>
+                        </button> --}}
                     </div>
                 </form>
 
