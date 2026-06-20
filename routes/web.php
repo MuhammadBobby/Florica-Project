@@ -67,4 +67,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/my-orders', [UserOrderController::class, 'index'])->name('my-orders.index');
     Route::post('/my-orders/{order}/cancel', [UserOrderController::class, 'cancel'])->name('my-orders.cancel');
     Route::get('/my-orders/{order}/receipt', [UserOrderController::class, 'receipt'])->name('my-orders.receipt');
+    Route::post('/my-orders/review', [UserOrderController::class, 'storeOrderReview'])->name('my-orders.review');
 });

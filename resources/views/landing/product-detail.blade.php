@@ -149,11 +149,11 @@
 
                         <div>
                             <h4 class="font-semibold text-gray-900">
-                                {{ $review->user->name ?? 'Pelanggan' }}
+                                {{ $review->user->full_name ?? 'Pelanggan' }}
                             </h4>
 
                             <p class="text-xs text-gray-500 mt-1">
-                                {{ $review->created_at->format('d M Y') }}
+                                {{ \Carbon\Carbon::parse($review->created_at)->diffForHumans() }}
                             </p>
                         </div>
 
@@ -167,9 +167,9 @@
 
                     </div>
 
-                    @if ($review->comment)
+                    @if ($review->review)
                         <p class="text-gray-600 mt-3 leading-relaxed">
-                            {{ $review->comment }}
+                            {{ $review->review }}
                         </p>
                     @endif
 
@@ -195,7 +195,7 @@
                         <a href="{{ route('product.detail', $related->slug) }}" class="group">
                             <div class="overflow-hidden rounded-xl border border-gray-100">
 
-                                <img src="/assets/products/{{ $related->primaryImage->image_url }}"
+                                <img src="{{ asset('storage/' . $related->primaryImage?->image_url) ?? '/assets/products/default_image.webp' }}"
                                     alt="{{ $related->name }}"
                                     class="w-full h-56 object-cover group-hover:scale-105 transition duration-300">
 

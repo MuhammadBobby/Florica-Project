@@ -6,6 +6,8 @@
             Pesanan Saya
         </h1>
 
+
+
         <div class="space-y-4">
 
             @forelse($orders as $order)
@@ -94,6 +96,15 @@
 
                         <div class="flex gap-2">
 
+                            @if ($order->order_status->value === 'completed')
+                                <button type="button" data-modal-target="review-order-modal-{{ $order->id }}"
+                                    data-modal-toggle="review-order-modal-{{ $order->id }}"
+                                    @if ($order->reviews->count() > 0) disabled @endif
+                                    class="px-4 py-2 bg-primary text-white rounded-base disabled:opacity-50 disabled:cursor-not-allowed">
+                                    Beri Ulasan
+                                </button>
+                            @endif
+
                             <button data-modal-target="order-modal-{{ $order->id }}"
                                 data-modal-toggle="order-modal-{{ $order->id }}"
                                 class="btn-detail-order text-body bg-neutral-primary-soft border border-default hover:bg-neutral-secondary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary-soft shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
@@ -148,6 +159,7 @@
 
     @foreach ($orders as $order)
         <x-front.order.detail-modal :order="$order" />
+        <x-front.order.review-modal :order="$order" />
     @endforeach
 
 
@@ -273,6 +285,92 @@
                         })
                     }
                 );
+            }
+        </script>
+
+        {{-- Handle Rating Star --}}
+        <script>
+            document.querySelectorAll('.rating-stars')
+                .forEach(container => {
+
+                    const itemId =
+                        container.dataset.item;
+
+                    const stars =
+                        container.querySelectorAll('.star-btn');
+
+                    const input =
+                        document.getElementById(
+                            `rating-input-${itemId}`
+                        );
+
+                    paintStars(stars, 5);
+
+                    stars.forEach(star => {
+
+                        star.addEventListener(
+                            'click',
+                            () => {
+
+                                const rating =
+                                    Number(
+                                        star.dataset.rating
+                                    );
+
+                                input.value =
+                                    rating;
+
+                                paintStars(
+                                    stars,
+                                    rating
+                                );
+
+                            }
+                        );
+
+                    });
+
+                });
+
+
+            function paintStars(
+                stars,
+                rating
+            ) {
+
+                stars.forEach(star => {
+
+                    const value =
+                        Number(
+                            star.dataset.rating
+                        );
+
+                    if (
+                        value <= rating
+                    ) {
+
+                        star.classList.remove(
+                            'text-gray-300'
+                        );
+
+                        star.classList.add(
+                            'text-yellow-400'
+                        );
+
+                    } else {
+
+                        star.classList.remove(
+                            'text-yellow-400'
+                        );
+
+                        star.classList.add(
+                            'text-gray-300'
+                        );
+
+                    }
+
+                });
+
             }
         </script>
 

@@ -6,6 +6,7 @@ use App\Enums\OrderStatus;
 use App\Enums\PaymentStatus;
 use App\Models\Order;
 use App\Models\Payment;
+use App\Models\ProductReview;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -83,7 +84,8 @@ class UserOrderController extends Controller
         $orders = Order::query()
             ->with([
                 'items.product.primaryImage',
-                'payment'
+                'payment',
+                'reviews'
             ])
             ->where(
                 'user_id',
@@ -92,9 +94,15 @@ class UserOrderController extends Controller
             ->latest()
             ->paginate(10);
 
+        $reviewedProductIds =
+            ProductReview::query()
+            ->where('user_id', Auth::id())
+            ->pluck('product_id')
+            ->toArray();
+
         return view(
             'front.orders.index',
-            compact('orders')
+            compact('orders', 'reviewedProductIds')
         );
     }
 
@@ -129,6 +137,61 @@ class UserOrderController extends Controller
         return view(
             'front.orders.receipt',
             compact('order')
+        );
+    }
+
+    // ========= REVIEWS=============
+    public function storeOrderReview(
+        Request $request
+    ) {
+
+        $order = Order::query()
+            ->where(
+                'user_id',
+                Auth::id()
+            )
+            ->findOrFail(
+                $request->order_id
+            );
+
+        // cek apakah sudah pernah review
+        $alreadyReviewed = ProductReview::query()
+            ->where(
+                'user_id',
+                Auth::id()
+            )
+            ->where(
+                'order_id',
+                $order->id
+            )
+            ->exists();
+
+        if ($alreadyReviewed) {
+            return back()->with(
+                'error',
+                'Pesanan ini sudah pernah direview.'
+            );
+        }
+
+
+        foreach ($request->reviews as $review) {
+            ProductReview::updateOrCreate(
+                [
+                    'user_id' => Auth::id(),
+                    'order_id' => $order->id,
+                    'product_id' => $review['product_id'],
+                ],
+
+                [
+                    'rating' => $review['rating'],
+                    'review' => $review['review'],
+                ]
+            );
+        }
+
+        return back()->with(
+            'success',
+            'Terima kasih atas ulasan Anda.'
         );
     }
 }

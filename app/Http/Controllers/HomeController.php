@@ -82,7 +82,7 @@ class HomeController extends Controller
     }
 
     // =========== PRODUCT DETAIL PAGE =============
-    public function productDetail($slug)
+    public function productDetail(String $slug)
     {
         $product = Product::query()
             ->with([
