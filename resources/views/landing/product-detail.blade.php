@@ -17,12 +17,26 @@
             {{-- Product Detail --}}
             <div>
 
-                {{-- Category --}}
-                @if ($product->category)
-                    <span class="inline-block bg-pink-100 text-primary text-xs font-medium px-3 py-1 rounded-full">
-                        {{ $product->category->name }}
-                    </span>
-                @endif
+                <div class="flex justify-between items-center">
+                    {{-- Category --}}
+                    @if ($product->category)
+                        <span class="inline-block bg-pink-100 text-primary text-xs font-medium px-3 py-1 rounded-full">
+                            {{ $product->category->name }}
+                        </span>
+                    @endif
+
+                    <button id="btn-wishlist" data-product="{{ $product->id }}"
+                        class="w-12 h-12 flex items-center justify-center" title="Wishlist">
+
+                        <svg id='wishlist-icon'
+                            class="w-6 h-6 text-gray-800 {{ $isWishlist ? 'text-red-500 fill-current' : 'text-gray-500' }}"
+                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12.01 6.001C6.5 1 1 8 5.782 13.001L12.011 20l6.23-7C23 8 17.5 1 12.01 6.002Z" />
+                        </svg>
+                    </button>
+                </div>
 
                 {{-- Product Name --}}
                 <h1 class="text-3xl md:text-4xl font-bold mt-3">
@@ -244,4 +258,79 @@
             </span>
         </a>
     </div>
+
+    @push('scripts')
+        <script>
+            document
+                .getElementById('btn-wishlist')
+                ?.addEventListener('click', async function() {
+
+                    const productId =
+                        this.dataset.product;
+
+                    const response =
+                        await fetch(
+                            `/wishlist/toggle/${productId}`, {
+                                method: 'POST',
+
+                                headers: {
+                                    'X-CSRF-TOKEN': document.querySelector(
+                                        'meta[name="csrf-token"]'
+                                    ).content
+                                }
+                            }
+                        );
+
+                    const result =
+                        await response.json();
+
+                    const icon =
+                        document.getElementById(
+                            'wishlist-icon'
+                        );
+
+                    if (result.action === 'added') {
+
+                        icon.setAttribute(
+                            'fill',
+                            'currentColor'
+                        );
+
+                        icon.classList.add(
+                            'text-red-500'
+                        );
+
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Ditambahkan ke favorit',
+                            timer: 1200,
+                            showConfirmButton: false
+                        }).then(() => {
+                            window.location.reload();
+                        });
+
+                    } else {
+
+                        icon.setAttribute(
+                            'fill',
+                            'none'
+                        );
+
+                        icon.classList.remove(
+                            'text-red-500'
+                        );
+
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Dihapus dari favorit',
+                            timer: 1200,
+                            showConfirmButton: false
+                        }).then(() => {
+                            window.location.reload();
+                        });
+                    }
+
+                });
+        </script>
+    @endpush
 </x-layouts.home>

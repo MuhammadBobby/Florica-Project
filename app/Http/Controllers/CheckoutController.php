@@ -83,7 +83,7 @@ class CheckoutController extends Controller
 
         // ============ CHECK ADDRESS ============
         if (!$address) {
-            return redirect()->route('user.address.index')
+            return redirect()->route("my-addresses.index")
                 ->with('error', 'Silahkan Masukkan Alamat Terlebih Dahulu.');
         }
 

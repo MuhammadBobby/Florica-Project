@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Wishlist;
+use Illuminate\Support\Facades\Auth;
 
 // use Illuminate\Http\Request;
 
@@ -104,6 +106,22 @@ class HomeController extends Controller
             ->take(4)
             ->get();
 
-        return view('landing.product-detail', compact('product', 'relatedProducts'));
+        // wishlist
+        $isWishlist = false;
+
+        if (Auth::check()) {
+            $isWishlist = Wishlist::query()
+                ->where(
+                    'user_id',
+                    Auth::id()
+                )
+                ->where(
+                    'product_id',
+                    $product->id
+                )
+                ->exists();
+        }
+
+        return view('landing.product-detail', compact('product', 'relatedProducts', 'isWishlist'));
     }
 }
