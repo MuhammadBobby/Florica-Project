@@ -44,12 +44,13 @@ Route::middleware(['auth', 'role:admin'])
         Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
         Route::patch('/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.update-status');
         Route::get('/orders/export', [OrderController::class, 'export'])->name('orders.export');
+        Route::post('/orders/rekap', [OrderController::class, 'rekap'])->name('orders.rekap');
         Route::resource('customers', CustomerController::class);
     });
 
 
 // ============ CUSTOMER ROUTES =============
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'role:customer'])->group(function () {
     // Cart
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart', [CartController::class, 'store'])->name('cart.store');

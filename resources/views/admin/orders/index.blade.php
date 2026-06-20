@@ -47,11 +47,19 @@
             <x-dashboard.orders.filter />
         </div>
 
-        {{-- Export --}}
-        <a id="btn-export-order" href="#"
-            class="px-4 py-2 bg-white border border-primary text-primary rounded-base hover:bg-primary hover:text-white w-fit">
-            Export PDF Pesanan
-        </a>
+        <div class="flex gap-3 items-center">
+            {{-- Export --}}
+            <a id="btn-export-order" href="#"
+                class="px-4 py-2 bg-white border border-primary text-primary rounded-base hover:bg-primary hover:text-white w-fit">
+                Export PDF Pesanan
+            </a>
+
+            {{-- Rekap --}}
+            <button type="button" data-modal-target="rekap-modal" data-modal-toggle="rekap-modal"
+                class="px-4 py-2 bg-white border border-primary text-primary rounded-base hover:bg-primary hover:text-white w-fit">
+                Rekap Pesanan
+            </button>
+        </div>
     </div>
 
     {{-- Table --}}
@@ -68,6 +76,7 @@
     <x-dashboard.pagination :paginator="$orders" />
 
     {{-- Modal --}}
+    <x-dashboard.orders.rekap-modal />
     @if (request()->routeIs('categories.edit'))
         <x-dashboard.categories.edit-modal :category="$category" />
     @endif

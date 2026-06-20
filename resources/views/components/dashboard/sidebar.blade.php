@@ -19,7 +19,7 @@
 </button>
 
 <aside id="sidebar"
-    class="fixed top-0 left-0 z-50 w-64 h-screen bg-neutral-primary-soft/95 backdrop-blur border-r border-default shadow-xl transition-transform duration-300 -translate-x-full sm:translate-x-0">
+    class="fixed top-0 left-0 z-30 w-64 h-screen bg-neutral-primary-soft/95 backdrop-blur border-r border-default shadow-xl transition-transform duration-300 -translate-x-full sm:translate-x-0">
 
     <div class="h-full px-3 py-4 overflow-y-auto pb-20">
 

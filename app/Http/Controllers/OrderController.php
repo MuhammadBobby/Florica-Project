@@ -201,4 +201,40 @@ class OrderController extends Controller
             )
         );
     }
+
+
+    // ========= REKAP ORDER ===========
+    public function rekap(Request $request)
+    {
+        $start = $request->start_date;
+        $end = $request->end_date;
+
+        $query = Order::query();
+
+        if ($start && $end) {
+            $query->whereBetween('created_at', [$start, $end]);
+        }
+
+        $orders = $query
+            ->whereIn('order_status', [
+                OrderStatus::Success->value,
+                OrderStatus::Confirmed->value,
+                OrderStatus::Packed->value,
+                OrderStatus::Shipped->value,
+                OrderStatus::Completed->value,
+            ])
+            ->with('payment')
+            ->get();
+
+        $totalRevenue = $orders->sum('total_amount');
+        $totalOrders = $orders->count();
+
+        return view('admin.orders.rekap', compact(
+            'orders',
+            'start',
+            'end',
+            'totalRevenue',
+            'totalOrders'
+        ));
+    }
 }
