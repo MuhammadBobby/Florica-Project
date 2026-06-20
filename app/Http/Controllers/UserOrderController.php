@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\OrderStatus;
+use App\Enums\PaymentStatus;
 use App\Models\Order;
 use App\Models\Payment;
 use Illuminate\Http\Request;
@@ -32,11 +34,11 @@ class UserOrderController extends Controller
                     case 'capture':
 
                         $payment->update([
-                            'payment_status' => 'success'
+                            'payment_status' => PaymentStatus::Paid->value
                         ]);
 
                         $order->update([
-                            'order_status' => 'success'
+                            'order_status' => OrderStatus::Success->value
                         ]);
 
                         break;
@@ -44,7 +46,7 @@ class UserOrderController extends Controller
                     case 'pending':
 
                         $payment->update([
-                            'payment_status' => 'pending'
+                            'payment_status' => PaymentStatus::Pending->value
                         ]);
 
                         break;
@@ -52,11 +54,11 @@ class UserOrderController extends Controller
                     case 'expire':
 
                         $payment->update([
-                            'payment_status' => 'failed'
+                            'payment_status' => PaymentStatus::Failed->value
                         ]);
 
                         $order->update([
-                            'order_status' => 'cancelled'
+                            'order_status' => OrderStatus::Cancelled->value
                         ]);
 
                         break;
@@ -65,11 +67,11 @@ class UserOrderController extends Controller
                     case 'cancel':
 
                         $payment->update([
-                            'payment_status' => 'failed'
+                            'payment_status' => PaymentStatus::Failed->value
                         ]);
 
                         $order->update([
-                            'order_status' => 'cancelled'
+                            'order_status' => OrderStatus::Cancelled->value
                         ]);
 
                         break;
@@ -109,5 +111,24 @@ class UserOrderController extends Controller
 
         return back()
             ->with('success', 'Order cancelled successfully');
+    }
+
+    // ========== RECEIPT ===========
+    public function receipt(Order $order)
+    {
+        abort_if(
+            $order->user_id !== Auth::id(),
+            403
+        );
+
+        $order->load([
+            'items',
+            'payment'
+        ]);
+
+        return view(
+            'front.orders.receipt',
+            compact('order')
+        );
     }
 }

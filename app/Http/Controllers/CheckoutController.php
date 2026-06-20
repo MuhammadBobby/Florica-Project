@@ -216,6 +216,12 @@ class CheckoutController extends Controller
                         $item->product->price
                 ]);
             }
+
+            // hapus item cart berdasarkan id
+            foreach ($cartItems as $item) {
+                $item->delete();
+            }
+
             $payload = [
                 'transaction_details' => [
                     'order_id' => $invoice,

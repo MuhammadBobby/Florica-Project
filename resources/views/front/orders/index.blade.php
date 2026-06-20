@@ -119,6 +119,13 @@
                                     </button>
                                 </form>
                             @endif
+
+                            @if (in_array($order->order_status->value, ['success', 'confirmed', 'packed', 'shipped', 'completed']))
+                                <a href="{{ route('my-orders.receipt', $order) }}"
+                                    class="text-white bg-success box-border border border-transparent hover:bg-success-strong focus:ring-4 focus:ring-success-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
+                                    Cetak Struk
+                                </a>
+                            @endif
                         </div>
 
                     </div>
@@ -157,7 +164,7 @@
 
                         async onSuccess(result) {
                             await updatePaymentStatus(
-                                result.order_id,
+                                orderId,
                                 'success'
                             );
 
@@ -172,7 +179,7 @@
 
                         async onPending(result) {
                             await updatePaymentStatus(
-                                result.order_id,
+                                orderId,
                                 'pending'
                             );
 
@@ -188,7 +195,7 @@
 
                         async onError(result) {
                             await updatePaymentStatus(
-                                result.order_id,
+                                orderId,
                                 'failed'
                             );
 

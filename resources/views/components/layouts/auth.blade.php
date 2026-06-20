@@ -1,6 +1,6 @@
 <x-layouts.layout title="{{ $title }}">
-    <div class="flex justify-end items-center pe-30 bg-secondary w-full h-full min-w-screen min-h-screen bg-center bg-no-repeat bg-[url('/assets/elements/bg-auth.webp')] bg-blend-multiply bg-cover"
-        loading="eager" style="background-image:url('/assets/elements/bg-auth.webp')">
+    <div class="flex justify-end items-center pe-30 bg-secondary w-full h-full min-w-screen min-h-screen bg-center bg-no-repeat bg-[url('/assets/elements/bg-auth-new.webp')] bg-blend-multiply bg-cover"
+        loading="eager" style="background-image:url('/assets/elements/bg-auth-new.webp')">
         <div class="bg-white/80 border border-slate-400 p-10 rounded-lg shadow-lg w-full max-w-xl">
             <div class="text-center">
                 <a href="{{ route('landing') }}">
