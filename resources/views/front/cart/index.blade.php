@@ -5,22 +5,22 @@
             <div class="space-y-4">
                 @forelse($cart?->items ?? [] as $item)
                     {{-- Cart Item --}}
-                    <div class="cart-item flex gap-4 p-4 bg-white rounded-base border border-default hover:bg-secondary/20 cursor-pointer transition"
+                    <div class="cart-item flex flex-col md:flex-row gap-4 p-4 bg-white rounded-base border border-default hover:bg-secondary/20 cursor-pointer transition"
                         data-id="{{ $item->id }}">
 
                         <input type="checkbox" name="selected_items[]" value="{{ $item->id }}"
-                            class="cart-checkbox mt-8 text-primary">
+                            class="hidden md:block cart-checkbox mt-8 text-primary">
 
                         <img src="{{ asset('storage/' . $item->product->primaryImage?->image_url) }}"
-                            class="w-24 h-24 object-cover rounded-base">
+                            class="w-full h-48 md:w-24 md:h-24 object-cover rounded-base">
 
                         <div class="flex-1">
 
-                            <h3 class="font-semibold">
+                            <h3 class="font-semibold text-sm md:text-base">
                                 {{ $item->product->name }}
                             </h3>
 
-                            <p class="text-primary font-bold">
+                            <p class="text-primary font-bold mt-1">
                                 Rp {{ number_format($item->product->price, 0, ',', '.') }}
                             </p>
 
@@ -32,19 +32,21 @@
                                     @method('PUT')
 
                                     <input type="number" name="quantity" min="1" value="{{ $item->quantity }}"
-                                        onchange="this.form.submit()" class="cart-qty border rounded px-2 py-1 w-20">
+                                        onchange="this.form.submit()"
+                                        class="cart-qty border rounded px-2 py-1 w-full md:w-20">
                                 </form>
 
                             </div>
 
                         </div>
 
-                        <form action="{{ route('cart.destroy', $item) }}" method="POST" class="delete-form-cart">
+                        <form action="{{ route('cart.destroy', $item) }}" method="POST"
+                            class="delete-form-cart self-end md:self-auto">
 
                             @csrf
                             @method('DELETE')
 
-                            <button class="text-red-500 hover:text-red-700 font-semibold font-montserrat">
+                            <button class="text-red-500 hover:text-red-700 font-semibold font-montserrat text-sm">
                                 Hapus
                             </button>
 
@@ -85,16 +87,17 @@
                     class="sticky bottom-5 mt-8 bg-white border border-default rounded-base p-4 flex justify-between items-center">
 
                     <div>
-                        <h4 class="font-semibold">
+                        <h4 class="font-semibold text-sm md:text-base">
                             Pilih produk yang ingin dibeli
                         </h4>
 
-                        <p class="text-sm text-body">
+                        <p class="text-xs md:text-sm text-body">
                             Bisa checkout beberapa produk sekaligus
                         </p>
                     </div>
 
-                    <button id="checkout-selected" class="bg-primary text-white px-6 py-3 rounded-base">
+                    <button id="checkout-selected"
+                        class="bg-primary text-white px-3 py-1 text-xs md:text-base md:px-6 md:py-3 font-medium md:font-normal rounded-base">
                         Checkout Terpilih
                     </button>
 
@@ -112,8 +115,8 @@
 
     {{-- Kembali --}}
     <a href="{{ route('products') }}"
-        class="fixed top-24 left-10 z-50
-           flex items-center gap-2
+        class="hidden fixed top-24 left-10 z-50
+           md:flex items-center gap-2
            px-4 py-3
            bg-primary text-white
            rounded-full

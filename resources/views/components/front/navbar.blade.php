@@ -15,7 +15,7 @@
 
 
 <nav class="fixed w-full z-20 top-0 insert-s-0 border-b border-default backdrop-blur-xl">
-    <div class="max-w-screen flex flex-wrap items-center justify-between mx-auto px-8 py-1">
+    <div class="max-w-screen flex flex-wrap items-center justify-between mx-auto px-3 md:px-8 py-1">
         <a href="{{ route('landing') }}" class="flex items-center space-x-3 rtl:space-x-reverse">
             <img src="/assets/logo_florica.webp" class="w-12 h-auto" alt="{{ config('app.name') }} Logo">
             <h6 class="self-center text-xl text-primary font-semibold whitespace-nowrap">Florica <span
@@ -26,7 +26,7 @@
         {{-- AUTH BUTTON --}}
         <div class="flex justify-center items-center gap-2 md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
             @auth
-                <div class="flex items-center justify-end gap-3">
+                <div class="hidden md:flex items-center justify-end gap-3">
                     {{-- WISHLIST --}}
                     <a href="{{ route('wishlist.index') }}" class="relative" title="Wishlist Produk">
                         <svg class="w-10 h-10 text-red-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -113,11 +113,120 @@
                     </li>
                 @endforeach
 
-                <li class="md:hidden mt-5">
-                    <a href="#"
-                        class="block rounded-sm py-2 px-3 font-bold tracking-wide border border-primary text-primary hover:bg-primary hover:text-white">
-                        Login / Register
-                    </a>
+                @auth
+                    {{-- Cart --}}
+                    <li class="w-full flex md:hidden mt-8">
+                        <a href="{{ route('cart.index') }}"
+                            class="relative w-full rounded-base py-2 px-3 font-medium tracking-wide text-white bg-primary md:bg-secondary md:text-primary">
+                            Keranjang Belanja 🛒
+                            @if ($cartCount >= 0)
+                                <div
+                                    class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-danger border-2 border-buffer rounded-full -top-2 -inset-e-2">
+                                    {{ $cartCount }}
+                                </div>
+                            @endif
+                        </a>
+                    </li>
+
+                    {{-- Profile, alamat, pesanan --}}
+                    <li class="md:hidden mt-3">
+                        <div class="space-y-1">
+
+                            {{-- Profile --}}
+                            <a href="{{ route('profile.index') }}"
+                                class="flex items-center gap-3 px-4 py-3 rounded-base hover:bg-neutral-secondary-medium transition">
+
+                                <svg class="w-5 h-5 text-primary" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                    viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm-7 8a7 7 0 1 1 14 0" />
+                                </svg>
+
+                                <span class="font-medium">
+                                    Profile Saya
+                                </span>
+
+                            </a>
+
+                            {{-- Address --}}
+                            <a href="{{ route('my-addresses.index') }}"
+                                class="flex items-center gap-3 px-4 py-3 rounded-base hover:bg-neutral-secondary-medium transition">
+
+                                <svg class="w-5 h-5 text-primary" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                    viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" d="M12 21s7-4.5 7-11a7 7 0 1 0-14 0c0 6.5 7 11 7 11Z" />
+                                    <circle cx="12" cy="10" r="2" stroke="currentColor" stroke-width="2" />
+                                </svg>
+
+                                <span class="font-medium">
+                                    Alamat Saya
+                                </span>
+
+                            </a>
+
+                            {{-- Orders --}}
+                            <a href="{{ route('my-orders.index') }}"
+                                class="flex items-center gap-3 px-4 py-3 rounded-base hover:bg-neutral-secondary-medium transition">
+
+                                <svg class="w-5 h-5 text-primary" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                    viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M3 7.5 12 3l9 4.5M3 7.5 12 12m-9-4.5V16.5L12 21m0-9 9-4.5V16.5L12 21m0-9v9" />
+                                </svg>
+
+                                <span class="font-medium">
+                                    Pesanan Saya
+                                </span>
+
+                            </a>
+
+                            {{-- Wishlist --}}
+                            <a href="{{ route('wishlist.index') }}"
+                                class="flex items-center gap-3 px-4 py-3 rounded-base hover:bg-neutral-secondary-medium transition">
+
+                                <svg class="w-5 h-5 text-primary" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                    viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M12 21s-7-4.35-9-8.5A5.5 5.5 0 0 1 12 5a5.5 5.5 0 0 1 9 7.5C19 16.65 12 21 12 21Z" />
+                                </svg>
+
+                                <span class="font-medium">
+                                    Wishlist
+                                </span>
+
+                            </a>
+
+                        </div>
+                    </li>
+                @endauth
+
+
+                <li class="md:hidden mt-3">
+                    @auth
+                        <form class="w-full" method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit"
+                                class="w-full text-primary border border-primary hover:bg-pink-700 box-border focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm py-2 px-3 focus:outline-none flex items-center justify-center gap-2 cursor-pointer">
+                                <svg class="rotate-180 text-xs" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                    width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M20 12H8m12 0-4 4m4-4-4-4M9 4H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h2" />
+                                </svg>
+                                <span>Logout</span>
+                            </button>
+                        </form>
+                    @else
+                        <a href="{{ route('login') }}"
+                            class="block rounded-base py-2 px-3 font-bold tracking-wide border border-primary text-primary hover:bg-primary hover:text-white">
+                            Login / Register
+                        </a>
+
+                    @endauth
                 </li>
             </ul>
         </div>

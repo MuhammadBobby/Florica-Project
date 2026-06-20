@@ -15,7 +15,7 @@
             text-white bg-primary
             hover:bg-pink-700
             focus:ring-4 focus:ring-secondary
-            rounded-base text-sm px-4 py-2.5">
+            rounded-base text-sm px-4 py-2.5 w-full md:w-fit whitespace-nowrap">
 
         {{ $selectedLabel }}
 

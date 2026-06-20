@@ -13,7 +13,7 @@
     </div>
 
     <form action="{{ $editingAddress ? route('my-addresses.update', $editingAddress) : route('my-addresses.store') }}"
-        method="POST" class="grid grid-cols-2 gap-3">
+        method="POST" class="grid md:grid-cols-2 gap-3">
         @csrf
 
         @if ($editingAddress)
@@ -56,7 +56,7 @@
         </div>
 
         <div class="flex justify-end col-span-2">
-            <button class="w-fit mt-5 bg-primary text-white px-5 py-2.5 rounded-base">
+            <button class="w-full md:w-fit mt-5 bg-primary text-white px-5 py-2.5 rounded-base">
                 {{ $editingAddress ? 'Update Alamat' : 'Simpan Alamat' }}
             </button>
         </div>

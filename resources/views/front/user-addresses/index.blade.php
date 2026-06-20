@@ -20,8 +20,8 @@
 
     {{-- Kembali --}}
     <a href="{{ route('products') }}"
-        class="fixed bottom-8 left-10 z-50
-           flex items-center gap-2
+        class="hidden fixed bottom-8 left-10 z-50
+           md:flex items-center gap-2
            px-4 py-3
            bg-primary text-white
            rounded-full

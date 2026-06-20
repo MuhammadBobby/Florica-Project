@@ -237,9 +237,9 @@
 
 
         {{-- Kembali --}}
-        <a href="{{ back()->getTargetUrl() }}"
-            class="fixed top-20 left-6 z-50
-           flex items-center gap-2
+        <a href="{{ route('products') }}"
+            class="hidden fixed top-20 left-6 z-50
+           md:flex items-center gap-2
            px-4 py-3
            bg-primary text-white
            rounded-full

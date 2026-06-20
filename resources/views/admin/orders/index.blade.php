@@ -39,7 +39,7 @@
 
     {{-- Filter --}}
     <div class="flex flex-col gap-5 my-5">
-        <div class="flex items-center gap-3">
+        <div class="flex flex-col md:flex-row items-center gap-3">
             {{-- Status --}}
             <x-dashboard.filter-dropdown label="Status Pemesanan" query="order_status" :options="$statusOptions" />
 

@@ -6,115 +6,96 @@
             Pesanan Saya
         </h1>
 
-
-
         <div class="space-y-4">
-
             @forelse($orders as $order)
                 @php
                     $canCancel =
                         $order->order_status->value === 'pending' && $order->created_at->diffInHours(now()) < 24;
                 @endphp
 
-
-                <div class="bg-white border rounded-base shadow-lg p-5">
+                <div class="bg-white border rounded-base shadow-lg p-4 sm:p-5">
 
                     {{-- Header --}}
-                    <div class="flex justify-between items-center">
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
                         <div>
-                            <h3 class="font-bold text-xl">
+                            <h3 class="font-bold text-lg sm:text-xl">
                                 {{ $order->invoice_number }}
                             </h3>
 
-                            <p class="text-body">
+                            <p class="text-body text-xs sm:text-sm">
                                 {{ $order->created_at->format('d M Y H:i') }} WIB
                             </p>
-
                         </div>
 
                         <span
-                            class="
-                        px-4 py-2 rounded-full text-xs font-medium uppercase
-                        {{ $order->status_color }}
-                        ">
+                            class="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[10px] sm:text-xs font-medium uppercase {{ $order->status_color }}">
                             {{ $order->order_status }}
                         </span>
-
                     </div>
 
-                    <hr class="my-4">
+                    <hr class="my-3 sm:my-4">
 
                     {{-- Produk pertama --}}
                     @php
                         $firstItem = $order->items->first();
                     @endphp
 
-                    <div class="flex gap-4">
-
+                    <div class="flex gap-3 sm:gap-4 items-start">
                         <img src="{{ asset('storage/' . $firstItem->product->primaryImage->image_url) }}"
-                            class="w-20 h-20 rounded-base object-cover">
+                            class="w-16 h-16 sm:w-20 sm:h-20 rounded-base object-cover shrink-0">
 
                         <div class="flex-1">
-
-                            <h4 class="font-semibold text-lg">
+                            <h4 class="font-semibold text-base sm:text-lg">
                                 {{ $firstItem->product_name }}
                             </h4>
 
-                            <p class="text-body">
-                                Qty
-                                {{ $firstItem->quantity }}
+                            <p class="text-body text-xs sm:text-sm">
+                                Qty {{ $firstItem->quantity }}
                             </p>
 
                             @if ($order->items->count() > 1)
-                                <p class="text-sm text-body mt-1">
-
-                                    +
-                                    {{ $order->items->count() - 1 }}
-                                    produk lainnya
-
+                                <p class="text-xs sm:text-sm text-body mt-1">
+                                    + {{ $order->items->count() - 1 }} produk lainnya
                                 </p>
                             @endif
-
                         </div>
-
                     </div>
 
-                    <hr class="my-4">
+                    <hr class="my-3 sm:my-4">
 
-                    <div class="flex justify-between items-center">
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+
                         <div>
-                            <p class="text-sm text-body">
+                            <p class="text-xs sm:text-sm text-body">
                                 Total Belanja
                             </p>
 
-                            <h4 class="font-bold text-primary">
-                                Rp
-                                {{ number_format($order->total_amount, 0, ',', '.') }}
+                            <h4 class="font-bold text-primary text-base sm:text-lg">
+                                Rp {{ number_format($order->total_amount, 0, ',', '.') }}
                             </h4>
-
                         </div>
 
-                        <div class="flex gap-2">
+                        <div class="flex flex-wrap gap-2 sm:gap-2">
 
                             @if ($order->order_status->value === 'completed')
                                 <button type="button" data-modal-target="review-order-modal-{{ $order->id }}"
                                     data-modal-toggle="review-order-modal-{{ $order->id }}"
                                     @if ($order->reviews->count() > 0) disabled @endif
-                                    class="px-4 py-2 bg-primary text-white rounded-base disabled:opacity-50 disabled:cursor-not-allowed">
+                                    class="px-3 sm:px-4 py-2 bg-primary text-white rounded-base text-xs sm:text-sm disabled:opacity-50 disabled:cursor-not-allowed">
                                     Beri Ulasan
                                 </button>
                             @endif
 
                             <button data-modal-target="order-modal-{{ $order->id }}"
                                 data-modal-toggle="order-modal-{{ $order->id }}"
-                                class="btn-detail-order text-body bg-neutral-primary-soft border border-default hover:bg-neutral-secondary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary-soft shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
+                                class="btn-detail-order text-body bg-neutral-primary-soft border border-default hover:bg-neutral-secondary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary-soft shadow-xs font-medium leading-5 rounded-base text-xs sm:text-sm px-3 sm:px-4 py-2 focus:outline-none">
                                 Detail Pesanan
                             </button>
 
                             @if ($order->payment && $order->payment->payment_status->value === 'pending')
                                 <button data-token="{{ $order->payment->snap_token }}"
                                     data-order="{{ $order->id }}"
-                                    class="btn-pay-again px-4 py-2 bg-primary text-white rounded-base">
+                                    class="btn-pay-again px-3 sm:px-4 py-2 bg-primary text-white rounded-base text-xs sm:text-sm">
                                     Bayar Sekarang
                                 </button>
                             @endif
@@ -125,7 +106,7 @@
                                     @csrf
 
                                     <button type="submit"
-                                        class="px-4 py-2 bg-red-600 text-white rounded-base hover:bg-red-700 transition">
+                                        class="px-3 sm:px-4 py-2 bg-red-600 text-white rounded-base text-xs sm:text-sm hover:bg-red-700 transition">
                                         Batalkan Pesanan
                                     </button>
                                 </form>
@@ -133,23 +114,22 @@
 
                             @if (in_array($order->order_status->value, ['success', 'confirmed', 'packed', 'shipped', 'completed']))
                                 <a href="{{ route('my-orders.receipt', $order) }}"
-                                    class="text-white bg-success box-border border border-transparent hover:bg-success-strong focus:ring-4 focus:ring-success-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
+                                    class="text-white bg-success border border-transparent hover:bg-success-strong focus:ring-4 focus:ring-success-medium shadow-xs font-medium leading-5 rounded-base text-xs sm:text-sm px-3 sm:px-4 py-2 focus:outline-none">
                                     Cetak Struk
                                 </a>
                             @endif
                         </div>
-
                     </div>
 
                 </div>
 
             @empty
-                <div class="text-center py-20">
-                    <h3 class="text-xl font-semibold">
+                <div class="text-center py-16 sm:py-20">
+                    <h3 class="text-lg sm:text-xl font-semibold">
                         Belum Ada Pesanan
                     </h3>
 
-                    <p class="text-body">
+                    <p class="text-body text-sm sm:text-base">
                         Yuk mulai belanja bunga favoritmu 🌸
                     </p>
                 </div>

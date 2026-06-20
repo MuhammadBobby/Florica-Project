@@ -61,24 +61,24 @@
                 <table class="w-full text-sm">
                     <thead>
                         <tr class="border-b border-default">
-                            <th class="py-2 text-left">Invoice</th>
-                            <th class="py-2 text-left">Customer</th>
-                            <th class="py-2 text-left">Status</th>
+                            <th class="py-2 px-4 text-left">Invoice</th>
+                            <th class="py-2 px-4 text-left">Customer</th>
+                            <th class="py-2 px-4 text-left">Status</th>
                         </tr>
                     </thead>
 
                     <tbody>
                         @forelse($latestOrders ?? [] as $order)
                             <tr class="border-b border-default">
-                                <td class="py-3">
+                                <td class="py-3 px-4">
                                     {{ $order->invoice_number }}
                                 </td>
 
-                                <td>
+                                <td class="px-4">
                                     {{ $order->user->full_name }}
                                 </td>
 
-                                <td>
+                                <td class="px-4">
                                     {{ ucfirst($order->order_status->value) }}
                                 </td>
                             </tr>

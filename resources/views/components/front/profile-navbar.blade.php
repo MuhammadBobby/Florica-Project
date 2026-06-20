@@ -1,9 +1,9 @@
 <div class="relative">
 
     <button id="profileDropdownButton" data-dropdown-toggle="profileDropdown"
-        class="flex items-center gap-3 px-2 py-1 rounded-full">
+        class="flex items-center gap-3 px-2 py-1 rounded-full cursor-pointer">
 
-        <img src="{{ Auth::user()->avatar ? asset('storage/' . Auth::user()->avatar) : asset('/assets/elements/avatar.webp') }}"
+        <img src="{{ Auth::user()?->avatar ? asset('storage/' . Auth::user()->avatar) : asset('/assets/elements/avatar.webp') }}"
             class="w-10 h-10 rounded-full object-cover">
 
         <div class="hidden md:block text-left">
@@ -22,14 +22,15 @@
     </button>
 
     <div id="profileDropdown"
-        class="hidden absolute right-0 mt-3 w-72 bg-white border border-default rounded-xl shadow-xl overflow-hidden z-50">
+        class="hidden absolute right-0 mt-3 w-72 bg-white border border-default rounded-xl shadow-xl overflow-hidden z-50"
+        aria-labelledby="profileDropdownButton">
 
         {{-- HEADER --}}
         <div class="p-4 bg-linear-to-r from-pink-50 to-rose-50">
 
             <div class="flex items-center gap-3">
 
-                <img src="{{ Auth::user()->avatar ? asset('storage/' . Auth::user()->avatar) : asset('/assets/elements/avatar.webp') }}"
+                <img src="{{ Auth::user()?->avatar ? asset('storage/' . Auth::user()->avatar) : asset('/assets/elements/avatar.webp') }}"
                     alt="{{ Auth::user()->full_name }}" class="w-14 h-14 rounded-full object-cover border">
 
                 <div>

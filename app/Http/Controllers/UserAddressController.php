@@ -127,6 +127,14 @@ class UserAddressController extends Controller
             403
         );
 
+
+        if ($my_address->orders()->exists()) {
+            return back()->with(
+                'error',
+                'Alamat sudah pernah digunakan pada pesanan dan tidak dapat dihapus.'
+            );
+        }
+
         $wasDefault = $my_address->is_default;
 
         $my_address->delete();
