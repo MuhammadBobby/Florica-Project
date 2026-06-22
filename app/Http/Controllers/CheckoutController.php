@@ -181,8 +181,9 @@ class CheckoutController extends Controller
             'distance_km' => ['required', 'numeric'],
         ]);
 
-        try {
+        DB::beginTransaction();
 
+        try {
             $address = UserAddress::query()
                 ->where('user_id', Auth::id())
                 ->findOrFail(
