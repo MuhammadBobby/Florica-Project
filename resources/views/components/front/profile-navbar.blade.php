@@ -11,8 +11,8 @@
                 {{ Auth::user()->full_name }}
             </p>
 
-            <p class="text-xs text-body">
-                Customer
+            <p class="text-xs text-body capitalize">
+                {{ Auth::user()->role->value }}
             </p>
         </div>
 
@@ -50,29 +50,39 @@
         {{-- MENU --}}
         <div class="p-2">
 
-            <a href="{{ route('profile.index') }}"
-                class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-neutral-secondary-medium">
+            {{-- profile user --}}
+            @if (Auth::user()->role->value == 'customer')
+                <a href="{{ route('profile.index') }}"
+                    class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-neutral-secondary-medium">
 
-                <span>👤</span>
-                <span>Profile Saya</span>
+                    <span>👤</span>
+                    <span>Profile Saya</span>
 
-            </a>
+                </a>
 
-            <a href="{{ route('my-addresses.index') }}"
-                class="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-neutral-secondary-medium">
+                <a href="{{ route('my-addresses.index') }}"
+                    class="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-neutral-secondary-medium">
 
-                <span>📍</span>
-                <span>Alamat Saya</span>
+                    <span>📍</span>
+                    <span>Alamat Saya</span>
 
-            </a>
+                </a>
 
-            <a href="{{ route('my-orders.index') }}"
-                class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-neutral-secondary-medium">
+                <a href="{{ route('my-orders.index') }}"
+                    class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-neutral-secondary-medium">
 
-                <span>📦</span>
-                <span>Pesanan Saya</span>
+                    <span>📦</span>
+                    <span>Pesanan Saya</span>
 
-            </a>
+                </a>
+            @elseif (Auth::user()->role->value == 'admin')
+                <a href="{{ route('dashboard') }}"
+                    class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-neutral-secondary-medium">
+                    <span>👤</span>
+                    <span>Dashboard</span>
+                </a>
+            @endif
+
 
         </div>
 

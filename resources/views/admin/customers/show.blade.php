@@ -201,7 +201,7 @@
                                     </td>
 
                                     <td class="px-4 py-3">
-                                        {{ ucfirst($order->order_status) }}
+                                        {{ ucfirst($order->order_status->value) }}
                                     </td>
 
                                     <td class="px-4 py-3">
