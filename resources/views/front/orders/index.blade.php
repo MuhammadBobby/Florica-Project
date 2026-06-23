@@ -28,7 +28,7 @@
                         </div>
 
                         <span
-                            class="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[10px] sm:text-xs font-medium uppercase {{ $order->status_color }}">
+                            class="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-2xs sm:text-xs font-medium uppercase {{ $order->status_color }}">
                             {{ $order->order_status }}
                         </span>
                     </div>
@@ -41,8 +41,10 @@
                     @endphp
 
                     <div class="flex gap-3 sm:gap-4 items-start">
-                        <img src="{{ asset('storage/' . $firstItem->product->primaryImage->image_url) }}"
-                            class="w-16 h-16 sm:w-20 sm:h-20 rounded-base object-cover shrink-0">
+                        <a href="{{ route('product.detail', $firstItem->product->slug) }}">
+                            <img src="{{ asset('storage/' . $firstItem->product->primaryImage->image_url) }}"
+                                class="w-16 h-16 sm:w-20 sm:h-20 rounded-base object-cover shrink-0">
+                        </a>
 
                         <div class="flex-1">
                             <h4 class="font-semibold text-base sm:text-lg">
@@ -135,7 +137,13 @@
                 </div>
             @endforelse
         </div>
+
+        {{-- pagination --}}
+        <div class="my-8">
+            {{ $orders->withQueryString()->links() }}
+        </div>
     </div>
+
 
     @foreach ($orders as $order)
         <x-front.order.detail-modal :order="$order" />

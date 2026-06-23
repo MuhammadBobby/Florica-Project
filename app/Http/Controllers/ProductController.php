@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CartItem;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\ProductImage;
+use App\Models\Wishlist;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -226,14 +228,15 @@ class ProductController extends Controller
     {
         DB::transaction(function () use ($product) {
 
-            foreach ($product->images as $image) {
+            Wishlist::where(
+                'product_id',
+                $product->id
+            )->delete();
 
-                if ($image->image_url) {
-                    Storage::disk('public')->delete($image->image_url);
-                }
-
-                $image->delete();
-            }
+            CartItem::where(
+                'product_id',
+                $product->id
+            )->delete();
 
             $product->delete();
         });
@@ -243,7 +246,6 @@ class ProductController extends Controller
             'Produk berhasil dihapus'
         );
     }
-
 
     // ========== VALIDATION RULES & MESSAGES =============
     private function validateProduct(Request $request): array

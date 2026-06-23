@@ -24,8 +24,8 @@
             <ul class="p-2 text-sm text-body font-medium" aria-labelledby="dropdown-button">
                 <li>
                     <a href="{{ route('products') }}"
-                        class="block p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded-md">All
-                        Categories</a>
+                        class="block p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded-md">Semua
+                        Kategori</a>
                 </li>
                 @foreach ($categories as $category)
                     <li>
@@ -43,7 +43,7 @@
 
         <input type="search" name="search" id="search-dropdown" value="{{ request('search') }}"
             class="px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm focus:ring-default-medium focus:border-default-medium block w-full placeholder:text-body"
-            placeholder="Search products">
+            placeholder="Cari Produk...">
         <button type="submit"
             class="inline-flex items-center  text-white bg-primary hover:bg-pink-700 box-border border border-transparent focus:ring-4 focus:ring-primary-medium shadow-xs font-medium leading-5 rounded-e-base text-sm px-4 py-2.5 focus:outline-none">
             <svg class="w-4 h-4 me-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
@@ -51,7 +51,7 @@
                 <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
                     d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
             </svg>
-            Search
+            Cari
         </button>
     </div>
 </form>

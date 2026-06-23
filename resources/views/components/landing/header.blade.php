@@ -27,13 +27,9 @@
 
             <div class="w-full ms-2 max-w-3xl">
                 <p class="text-xl font-light tracking-wider md:text-3xl">Make Every Moment Bloom</p>
-                <p class="text-lg font-light mt-5 -tracking-wide md:text-xl">Lorem ipsum dolor sit amet consectetur
-                    adipisicing
-                    elit. Officiis
-                    quod eos ad obcaecati vero natus,
-                    maiores voluptates excepturi, tempore magni fugit ut sequi nihil adipisci optio illo. Fugiat,
-                    aliquam
-                    rem.</p>
+                <p class="text-lg font-light mt-5 -tracking-wide md:text-xl">Florica Blooms menghadirkan bouquet bunga
+                    dan keychain handmade pipe cleaner dengan desain yang estetik dan berkesan. Cocok untuk berbagai
+                    momen spesial, mulai dari hadiah, perayaan, hingga ungkapan kasih sayang untuk orang terdekat.</p>
             </div>
             </he>
     </div>
@@ -41,9 +37,9 @@
     <div class="w-fit flex flex-col justify-center items-center gap-3">
         <img src="/assets/elements/blooms.webp" alt="Blooms" class="w-[80%] mx-auto">
 
-        <button type="button"
+        <a href="#bestProduct"
             class="text-lg text-primary tracking-widest bg-secondary box-border border border-transparent hover:bg-pink-300 focus:ring-4 focus:ring-pink-200 shadow-xs leading-5 rounded-full px-4 py-2.5 mt-5 focus:outline-none md:text-xl">
             Lihat produk >
-        </button>
+        </a>
     </div>
 </section>

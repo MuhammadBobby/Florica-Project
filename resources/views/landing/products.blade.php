@@ -2,7 +2,7 @@
     <header class="py-3 font-montserrat">
         <h1 class="text-5xl font-light -tracking-wider text-center mb-4">Produk <span
                 class="text-primary font-semibold">Florica Blooms</span></h1>
-        <p class="text-center text-gray-600 mb-8">Discover our wide range of products that cater to your needs.</p>
+        <p class="text-center text-gray-600 mb-8">Temukan beragam produk kami yang sesuai dengan kebutuhan Anda.</p>
     </header>
 
 

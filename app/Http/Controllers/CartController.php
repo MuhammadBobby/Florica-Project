@@ -91,7 +91,10 @@ class CartController extends Controller
             ]);
         }
 
-        return back();
+        return back()->with(
+            'success',
+            'Produk berhasil ditambahkan ke keranjang'
+        );
     }
 
     public function update(

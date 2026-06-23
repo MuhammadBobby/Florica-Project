@@ -5,7 +5,7 @@
         <div class="flex justify-between items-center mb-8">
 
             <h1 class="text-3xl font-bold">
-                Wishlist Saya
+                favorit Saya
             </h1>
 
             <a href="{{ route('landing') }}" class="px-4 py-2 bg-primary text-white rounded-base">
@@ -19,7 +19,13 @@
 
             @forelse($wishlists as $wishlist)
                 <a href="{{ route('product.detail', $wishlist->product->slug) }}"
-                    class="bg-white rounded-base shadow hover:shadow-xl transition">
+                    class="bg-white rounded-base shadow hover:shadow-xl transition relative">
+
+                    @if ($wishlist->product->trashed())
+                        <span class="text-xs font-medium text-red-500 absolute top-2 right-2 bg-white rounded-full px-2">
+                            Produk Sudah Tidak Tersedia
+                        </span>
+                    @endif
 
                     <img src="{{ asset('storage/' . $wishlist->product->primaryImage->image_url) }}"
                         class="w-full h-60 object-cover rounded-t-base">
