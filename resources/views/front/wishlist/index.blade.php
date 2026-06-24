@@ -5,7 +5,7 @@
         <div class="flex justify-between items-center mb-8">
 
             <h1 class="text-3xl font-bold">
-                favorit Saya
+                Favorit Saya
             </h1>
 
             <a href="{{ route('landing') }}" class="px-4 py-2 bg-primary text-white rounded-base">

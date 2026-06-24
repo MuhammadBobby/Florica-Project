@@ -11,7 +11,7 @@
         </span>
     </a>
 
-    <h1 class="text-2xl md:text-4xl font-semibold font-montserrat tracking-widest text-primary text-shadow-2xs">
-        Checkout Florica Blooms
+    <h1 class="text-2xl md:text-4xl font-bold font-montserrat tracking-wide text-primary text-shadow-2xs">
+        Checkout Produk
     </h1>
 </header>
