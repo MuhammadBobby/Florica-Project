@@ -40,10 +40,10 @@ class HomeController extends Controller
             ->take(3)
             ->get();
 
-        $cartCount = 0;
+        $categories = Category::all();
 
 
-        return view('landing.index', compact('bouquetProducts', 'keychainProducts'));
+        return view('landing.index', compact('bouquetProducts', 'keychainProducts', 'categories'));
     }
 
     // =========== PRODUCTS PAGE =============

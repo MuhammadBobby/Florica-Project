@@ -3,8 +3,9 @@
     <x-landing.header />
 
     {{-- =========== BEST PRODUCT ========== --}}
-    <x-landing.best-product :products="$bouquetProducts" category="Bouquets" />
-    <x-landing.best-product :products="$keychainProducts" category="Keychains" />
+    @foreach ($categories as $category)
+        <x-landing.best-product :products="$bouquetProducts" :category="$category" />
+    @endforeach
 
     {{-- ========== ABOUT & CONTACT ========== --}}
     <x-landing.about-contact />

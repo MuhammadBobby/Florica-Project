@@ -2,17 +2,17 @@
     class="w-full flex flex-col justify-between items-center gap-5 md:flex-row md:justify-center md:items-center">
     <div class="w-full">
         {{-- Search Product --}}
-        <form class="w-full max-w-md">
+        <form method="GET" action="{{ route('products') }}" class="w-full max-w-md">
             <label for="search" class="block mb-2.5 text-lg font-medium text-primary sr-only ">Cari produk...</label>
             <div class="relative">
                 <div class="absolute inset-y-0 insert-s-0 flex items-center ps-3 pointer-events-none">
-                    <svg class="w-5 h-5 text-primary" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                        height="24" fill="none" viewBox="0 0 24 24">
+                    <svg class="w-5 h-5 text-primary" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        width="24" height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
                             d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
                     </svg>
                 </div>
-                <input type="search" id="search"
+                <input type="search" name="search" id="search"
                     class="block p-3 ps-12 bg-secondary border border-default-medium text-primary text-lg rounded-full focus:ring-primary focus:border-primary shadow-xs placeholder:text-primary"
                     placeholder="Cari produk..." required />
             </div>
