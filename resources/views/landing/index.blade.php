@@ -4,7 +4,11 @@
 
     {{-- =========== BEST PRODUCT ========== --}}
     @foreach ($categories as $category)
-        <x-landing.best-product :products="$bouquetProducts" :category="$category" />
+        <x-landing.best-product
+        :category="$category"
+        :products="$category->slug === 'bouquet'
+            ? $bouquetProducts
+            : $keychainProducts" />
     @endforeach
 
     {{-- ========== ABOUT & CONTACT ========== --}}
