@@ -14,36 +14,20 @@ class HomeController extends Controller
     //============ LANDING PAGE =============
     public function index()
     {
-        // Get product category bouquet
-        $bouquetProducts = Product::query()
+        $categories = Category::whereHas('products', function ($query) {
+            $query->where('is_active', true);
+        })
             ->with([
-                'category',
-                'primaryImage',
+                'products' => function ($query) {
+                    $query->with('primaryImage')
+                        ->where('is_active', true)
+                        ->latest()
+                        ->take(3);
+                }
             ])
-            ->whereHas('category', function ($query) {
-                $query->where('slug', 'bouquet');
-            })
-            ->where('is_active', true)
-            ->take(3)
             ->get();
 
-        // Get product category keychain
-        $keychainProducts = Product::query()
-            ->with([
-                'category',
-                'primaryImage',
-            ])
-            ->whereHas('category', function ($query) {
-                $query->where('slug', 'keychain');
-            })
-            ->where('is_active', true)
-            ->take(3)
-            ->get();
-
-        $categories = Category::all();
-
-
-        return view('landing.index', compact('bouquetProducts', 'keychainProducts', 'categories'));
+        return view('landing.index', compact('categories'));
     }
 
     // =========== PRODUCTS PAGE =============

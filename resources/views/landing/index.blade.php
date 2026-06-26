@@ -4,11 +4,9 @@
 
     {{-- =========== BEST PRODUCT ========== --}}
     @foreach ($categories as $category)
-        <x-landing.best-product
-        :category="$category"
-        :products="$category->slug === 'bouquet'
-            ? $bouquetProducts
-            : $keychainProducts" />
+        @if ($category->products->isNotEmpty())
+            <x-landing.best-product :category="$category" :products="$category->products" />
+        @endif
     @endforeach
 
     {{-- ========== ABOUT & CONTACT ========== --}}
