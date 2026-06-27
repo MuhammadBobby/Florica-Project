@@ -74,6 +74,16 @@ class ProductController extends Controller
     {
         $validated = $this->validateProduct($request);
 
+        $slug = Str::slug($validated['name']);
+
+        if (Product::where('slug', $slug)->exists()) {
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'name' => 'Nama produk sudah terdaftar. Silahkan masukkan produk lain.',
+                ]);
+        }
+
         DB::transaction(function () use ($request, $validated) {
 
             $product = Product::create([
