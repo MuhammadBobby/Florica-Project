@@ -15,13 +15,21 @@
     <x-dashboard.header title="Produk" subTitle="Kelola Produk Florica Blooms." />
 
     {{-- Create Button --}}
-    <div class="flex flex-col sm:flex-row md:items-center justify-between mb-8 mt-12">
+    <div class="flex flex-col sm:flex-row md:items-center justify-between mt-12">
         {{-- Filter --}}
         <x-dashboard.products.filter :categories="$categories" :statusProductOptions="$statusProductOptions" />
 
         <button type="button" data-modal-target="create-product-modal" data-modal-toggle="create-product-modal"
             class="mt-3 md:mt-0 px-4 py-2.5 text-sm font-medium text-white bg-primary rounded-base hover:bg-pink-700 focus:ring-4 focus:ring-secondary">
             Tambah Produk
+        </button>
+    </div>
+
+    <div class="flex gap-3 items-center mb-8 ">
+        {{-- Export --}}
+        <button type="button" data-modal-target="export-product-modal" data-modal-toggle="export-product-modal"
+            class="px-4 py-2 bg-white border border-primary text-primary rounded-base hover:bg-primary hover:text-white w-fit">
+            Laporan Penjualan Produk
         </button>
     </div>
 
@@ -38,6 +46,7 @@
     <x-dashboard.pagination :paginator="$products" />
 
     {{-- Modal --}}
+    <x-dashboard.products.export-product :products="$productsDropdown" />
     <x-dashboard.products.create-modal :categories="$categories" />
     @if (request()->routeIs('products.edit'))
         <x-dashboard.products.edit-modal :product="$product" :categories="$categories" />

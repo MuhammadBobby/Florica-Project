@@ -11,6 +11,8 @@ use App\Models\ProductImage;
 use App\Models\Wishlist;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use App\Models\OrderItem;
+use Carbon\Carbon;
 
 class ProductController extends Controller
 {
@@ -54,7 +56,10 @@ class ProductController extends Controller
 
         $categories = Category::all();
 
-        return view('admin.products.index', compact('products', 'categories'));
+        $productsDropdown = Product::orderBy('name')
+            ->get(['id', 'name']);
+
+        return view('admin.products.index', compact('products', 'categories', 'productsDropdown'));
     }
 
     /**
@@ -255,6 +260,46 @@ class ProductController extends Controller
             'success',
             'Produk berhasil dihapus'
         );
+    }
+
+    // ================ EXPORT REPORT =============
+    public function export(Request $request)
+    {
+        $validated = $request->validate([
+            'product_id' => ['nullable', 'exists:products,id'],
+            'start_date' => ['required', 'date'],
+            'end_date' => ['required', 'date'],
+        ]);
+
+        $query = OrderItem::query()
+            ->with([
+                'order',
+                'product',
+            ])
+            ->whereHas('order', function ($query) use ($validated) {
+                $query->where('order_status', 'completed')
+                    ->whereBetween('created_at', [
+                        Carbon::parse($validated['start_date'])->startOfDay(),
+                        Carbon::parse($validated['end_date'])->endOfDay(),
+                    ]);
+            });
+
+        if (!empty($validated['product_id'])) {
+            $query->where('product_id', $validated['product_id']);
+        }
+
+        $items = $query->get()->sortByDesc(function ($item) {
+            return $item->order->created_at;
+        });
+
+        return view('admin.products.export', [
+            'items' => $items,
+            'product' => !empty($validated['product_id'])
+                ? Product::find($validated['product_id'])
+                : null,
+            'startDate' => $validated['start_date'],
+            'endDate' => $validated['end_date'],
+        ]);
     }
 
     // ========== VALIDATION RULES & MESSAGES =============
