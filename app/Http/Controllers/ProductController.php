@@ -167,7 +167,10 @@ class ProductController extends Controller
             ->latest()
             ->paginate(10);
 
-        return view('admin.products.index', compact('product', 'categories', 'products'));
+        $productsDropdown = Product::orderBy('name')
+            ->get(['id', 'name']);
+
+        return view('admin.products.index', compact('product', 'categories', 'products', 'productsDropdown'));
     }
 
     /**
